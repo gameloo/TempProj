@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="EWB_GUI_Alpha.ElectronicComponents.EMFsourceControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EWB_GUI_Alpha.ElectronicComponents"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="100">
+
+    <Path Stroke="Black">
+        <Path.Data>
+            <GeometryGroup FillRule="EvenOdd">
+                <LineGeometry StartPoint="50,20" EndPoint="50,0"/>
+                <LineGeometry StartPoint="50,80" EndPoint="50,100"/>
+                <EllipseGeometry Center="50,50" RadiusX="30" RadiusY="30"/>
+                
+                <LineGeometry StartPoint="50,70" EndPoint="50,30"/>
+                <LineGeometry StartPoint="40,40" EndPoint="50,30"/>
+                <LineGeometry StartPoint="60,40" EndPoint="50,30"/>
+            </GeometryGroup>
+        </Path.Data>
+    </Path>
+</UserControl>

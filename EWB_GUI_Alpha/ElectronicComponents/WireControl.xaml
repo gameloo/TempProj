@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="EWB_GUI_Alpha.ElectronicComponents.WireControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EWB_GUI_Alpha.ElectronicComponents"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    >
+
+    <!--<Line Name="tempName" X1="{x:Bind pointConnector_1.X, Mode=OneWay}" X2="{x:Bind pointConnector_2.X, Mode=OneWay}" Y1="{x:Bind pointConnector_1.Y, Mode=OneWay}" Y2="{x:Bind pointConnector_2.Y, Mode=OneWay}" Stroke="Red" StrokeThickness="4"/>-->
+    <!--<Line Name="tempName"
+          X1="{Binding Source=connector_1,Path=PositionOnCanvas.X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+          X2="{Binding Source=connector_2,Path=PositionOnCanvas.X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+          Y1="{Binding Source=connector_1,Path=PositionOnCanvas.Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+          Y2="{Binding Source=connector_2,Path=PositionOnCanvas.Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+          Stroke="Red" StrokeThickness="4"/>-->
+    <Line Name="tempName" X1="{x:Bind X1}" X2="{x:Bind X2}" Y1="{x:Bind Y1}" Y2="{x:Bind Y2}" Stroke="Red" StrokeThickness="4"/>
+    <UserControl.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem Text="Удалить соединение"/>
+        </MenuFlyout>
+    </UserControl.ContextFlyout>
+</UserControl>

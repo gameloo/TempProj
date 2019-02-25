@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="EWB_GUI_Alpha.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EWB_GUI_Alpha"
+    xmlns:ecomponents="using:EWB_GUI_Alpha.ElectronicComponents"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="WhiteSmoke">
+        <ScrollViewer ZoomMode="Enabled" MinZoomFactor="0.5" MaxZoomFactor="1"
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
+            <Canvas Name="cWorkSpace" Background="White" Height="2400" Width="2400">
+                <Canvas.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem Text="Добавть элемент">
+                            <MenuFlyoutItem Text="Резистор" Click="AddResistor"/>
+                            <MenuFlyoutItem Text="Конденсатор"/>
+                            <MenuFlyoutItem Text="Катушка индкутивности"/>
+                            <MenuFlyoutItem Text="Источник ЭДС"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutItem Text="Повторить добавление" Click="RepeatAddingLastElement"/>
+                    </MenuFlyout>
+                </Canvas.ContextFlyout>
+            </Canvas>
+        </ScrollViewer>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Name="CommandBar">
+            <AppBarButton Label="Сохранить как" Icon="Save"/>
+            <AppBarButton Label="Открыть" Icon="OpenFile"/>
+            <AppBarSeparator/>
+            <AppBarButton Label="Настройки" Icon="Setting"/>
+            <AppBarSeparator/>
+            <AppBarButton Label="Play" Icon="Play"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
