@@ -9,9 +9,11 @@
     d:DesignHeight="120"
     d:DesignWidth="120"
     AllowDrop="True"
+    ManipulationStarted="UserControl_ManipulationStarted"
     ManipulationDelta="UserControl_ManipulationDelta"
     ManipulationCompleted="UserControl_ManipulationCompleted"
     ManipulationMode="TranslateX, TranslateY">
+    <!--ManipulationDelta="UserControl_ManipulationDelta"-->
 
     <Canvas Background="Purple" Width="120" Height="120">
         <Path Stroke="Black">
@@ -27,17 +29,19 @@
             </Path.RenderTransform>
         </Path>
 
-        <local:ConnectorControl x:Name="connector_1" Canvas.Left="0" Canvas.Top="55" Opacity="0.7"/>
-        <local:ConnectorControl x:Name="connector_2" Canvas.Left="110" Canvas.Top="55" Opacity="0.7"/>
+        <!--<local:ConnectorControl x:Name="connector_1" Canvas.Left="0" Canvas.Top="55" Opacity="0.7"/>
+        <local:ConnectorControl x:Name="connector_2" Canvas.Left="110" Canvas.Top="55" Opacity="0.7"/>-->
+        <local:ConnectorControl x:Name="connector_1" Canvas.Left="{x:Bind PositionConnector_1.X}" Canvas.Top="{x:Bind PositionConnector_1.Y}" Opacity="0.7"/>
+        <local:ConnectorControl x:Name="connector_2" Canvas.Left="{x:Bind PositionConnector_2.X}" Canvas.Top="{x:Bind PositionConnector_2.Y}" Opacity="0.7"/>
 
-        <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind spRILeft}" Canvas.Top="{x:Bind spRITop}">
+        <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind PositionResistanceIndicator.X}" Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
             <TextBlock Text="R: "/>
             <TextBlock Text="{x:Bind ResistanceValue}"/>
         </StackPanel>
-        
+
         <Canvas.ContextFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem Text="Повернуть" Click="RotateElement"/>
+                <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
                 <MenuFlyoutItem Text="Копировать"/>
                 <MenuFlyoutItem Text="Свойства"/>
                 <MenuFlyoutSeparator/>

@@ -19,15 +19,42 @@ using Windows.UI.Xaml.Navigation;
 
 namespace EWB_GUI_Alpha.ElectronicComponents
 {
-    public partial class ResistorControl : UserControl
+    public partial class ResistorControl : UserControl, IEComponent
     {
-        private double top;
-        private double left;
+        private Point PositionConnector_1 { get; set; } = new Point(0, 55);
+        private Point PositionConnector_2 { get; set; } = new Point(110, 55);
+        private Point PositionResistanceIndicator { get; set; } = new Point(50, 20);
 
-        private int spRILeft = 50;
-        private int spRITop = 20;
+        public Point CenterComponentOnCanvas
+        {
+            get
+            {
+                return new Point(
+                    Canvas.GetLeft(this) + this.ActualHeight / 2,
+                    Canvas.GetTop(this) + this.ActualWidth / 2
+                    );
+            }
+        }
 
-        private double angle = 0;
+        public PointCollection CurrentPositionComponentOnCanvas
+        {
+            get
+            {
+                return new PointCollection()
+                {
+                    new Point(
+                        Canvas.GetLeft(this),
+                        Canvas.GetTop(this)
+                        ),
+                    new Point(
+                        Canvas.GetLeft(this) + this.ActualHeight,
+                        Canvas.GetTop(this) + this.ActualWidth
+                        )
+                };
+            }
+        }
+
+        public PointCollection OldPositionComponentOnCanvas { get; set; }
 
         public Point PositionOnCanvas
         {
@@ -37,26 +64,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
         }
 
-        public double Angle
-        {
-            set
-            {
-                if (value == 0)
-                {
-                    angle = value;
-                    spRILeft = 50;
-                    spRITop = 20;
-                }
-                else if (value == 90)
-                {
-                    angle = value;
-                    spRILeft = 90;
-                    spRITop = 50;
-                }
-                else throw new ArgumentException();
-            }
-            get { return angle; }
-        }
+        public double Angle { get; set; }
 
         public double ResistanceValue { get; set; }
 
@@ -73,80 +81,36 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             this.ResistanceValue = resistorControl.ResistanceValue;
         }
 
-        private void RotateElement(object sender, RoutedEventArgs e)
+        public void RotateComponent(object sender, RoutedEventArgs e)
         {
             if (Angle == 0)
             {
                 Angle = 90;
+                PositionConnector_1 = new Point(55, 0);
+                PositionConnector_2 = new Point(55, 110);
+                PositionResistanceIndicator = new Point(90, 50);
             }
             else
             {
                 Angle = 0;
+                PositionConnector_1 = new Point(0, 55);
+                PositionConnector_2 = new Point(110, 55);
+                PositionResistanceIndicator = new Point(50, 20);
             }
             Bindings.Update();
-        }
-
-        private void UserControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            var left = Canvas.GetLeft(this) + e.Delta.Translation.X;
-            var top = Canvas.GetTop(this) + e.Delta.Translation.Y;
-            Canvas.SetLeft(this, left);
-            Canvas.SetTop(this, top);
-
-            connector_1.UpdatePositionOnCanvas(); //! Test
-            connector_2.UpdatePositionOnCanvas(); //! Test
-        }
-
-        private void UserControl_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
-            var left = Canvas.GetLeft(this);
-            var top = Canvas.GetTop(this);
-
-
-
-            // Выравнивание элемента
-            left = Math.Round(left);
-            top = Math.Round(top);
-
-            if (left % 120 < 60)
-                left -= left % 120;
-            else left += (120 - left % 120);
-
-            if (top % 120 < 60)
-                top -= top % 120;
-            else top += (120 - top % 120);
-
-            left = left < 0 ? 0 : left;
-            top = top < 0 ? 0 : top;
-            // *
-
-            // Проверка на наличие других элементов в Canvas с такими же координатами
-            DependencyObject parent = VisualTreeHelper.GetParent(this);
-            var uIElement = (parent as Panel).Children.FirstOrDefault(element =>
-            {
-                return ((Canvas.GetLeft(element) == left) && (Canvas.GetTop(element) == top));
-            });
-            if (uIElement == null)
-            {
-                Canvas.SetLeft(this, left);
-                Canvas.SetTop(this, top);
-                this.left = left;
-                this.top = top;
-            }
-            else
-            {
-                Canvas.SetLeft(this, this.left);
-                Canvas.SetTop(this, this.top);
-            }
-            // *
-            connector_1.UpdatePositionOnCanvas(); //! Test
-            connector_2.UpdatePositionOnCanvas(); //! Test
+            ChildrenPositionUpdate();
         }
 
         private void DeleteElement(object sender, RoutedEventArgs e)
         {
             DependencyObject parent = VisualTreeHelper.GetParent(this);
             (parent as Panel).Children.Remove(this);
+        }
+
+        public void ChildrenPositionUpdate()
+        {
+            connector_1.UpdatePositionOnCanvas(); //! Test
+            connector_2.UpdatePositionOnCanvas(); //! Test
         }
     }
 }

@@ -104,6 +104,7 @@
     <Compile Include="ElectronicComponents\EMFsourceControl.xaml.cs">
       <DependentUpon>EMFsourceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ElectronicComponents\IEComponent.cs" />
     <Compile Include="ElectronicComponents\InductorControl.xaml.cs">
       <DependentUpon>InductorControl.xaml</DependentUpon>
     </Compile>
