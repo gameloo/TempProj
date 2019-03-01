@@ -20,6 +20,15 @@ using Windows.UI.Xaml.Shapes;
 
 namespace EWB_GUI_Alpha.ElectronicComponents
 {
+    public enum Position
+    {
+        top,
+        bottom,
+        left,
+        right
+    }
+
+
     public sealed partial class ConnectorControl : UserControl
     {
         // Private static fields
@@ -29,6 +38,21 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         public delegate void Update();
         public Update update;
+
+        // Test /!\
+
+        public static readonly DependencyProperty PosProperty =
+            DependencyProperty.Register(
+                "PositionOnElement", typeof(Position),
+                typeof(ConnectorControl), null
+            );
+        public Position PositionOnElement
+        {
+            get { return (Position)GetValue(PosProperty); }
+            set { SetValue(PosProperty, value); }
+        }
+
+        // *
 
         private Point point;
         public Point PositionOnCanvas
@@ -49,11 +73,11 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     Canvas.GetLeft(
                         (UIElement)VisualTreeHelper.GetParent(
                             VisualTreeHelper.GetParent(this))
-                        ) + Canvas.GetLeft(this),
+                        ) + Canvas.GetLeft(this) + this.ActualHeight/2,
                     Canvas.GetTop(
                         (UIElement)VisualTreeHelper.GetParent(
                             VisualTreeHelper.GetParent(this))
-                                ) + Canvas.GetTop(this)
+                                ) + Canvas.GetTop(this) + this.ActualWidth/2
                     );
             update?.Invoke();
         }

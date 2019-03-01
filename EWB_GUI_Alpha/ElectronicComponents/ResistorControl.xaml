@@ -15,13 +15,13 @@
     ManipulationMode="TranslateX, TranslateY">
     <!--ManipulationDelta="UserControl_ManipulationDelta"-->
 
-    <Canvas Background="Purple" Width="120" Height="120">
-        <Path Stroke="Black">
+    <Canvas Background="White" Width="120" Height="120">
+        <Path Stroke="Black" StrokeThickness="3">
             <Path.Data>
                 <GeometryGroup x:Name="Geometry" FillRule="EvenOdd">
                     <RectangleGeometry Rect="10,40,100,40"/>
-                    <LineGeometry StartPoint="5,60" EndPoint="10,60"/>
-                    <LineGeometry StartPoint="110,60" EndPoint="115,60"/>
+                    <LineGeometry StartPoint="0,60" EndPoint="10,60"/>
+                    <LineGeometry StartPoint="110,60" EndPoint="120,60"/>
                 </GeometryGroup>
             </Path.Data>
             <Path.RenderTransform>
@@ -29,10 +29,14 @@
             </Path.RenderTransform>
         </Path>
 
-        <!--<local:ConnectorControl x:Name="connector_1" Canvas.Left="0" Canvas.Top="55" Opacity="0.7"/>
-        <local:ConnectorControl x:Name="connector_2" Canvas.Left="110" Canvas.Top="55" Opacity="0.7"/>-->
-        <local:ConnectorControl x:Name="connector_1" Canvas.Left="{x:Bind PositionConnector_1.X}" Canvas.Top="{x:Bind PositionConnector_1.Y}" Opacity="0.7"/>
-        <local:ConnectorControl x:Name="connector_2" Canvas.Left="{x:Bind PositionConnector_2.X}" Canvas.Top="{x:Bind PositionConnector_2.Y}" Opacity="0.7"/>
+        <local:ConnectorControl x:Name="connector_1" PositionOnElement="left"
+                                Canvas.Left="{x:Bind PositionConnector_1.X}"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"
+                                Opacity="0.5"/>
+        <local:ConnectorControl x:Name="connector_2" PositionOnElement="right"
+                                Canvas.Left="{x:Bind PositionConnector_2.X}"
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"
+                                Opacity="0.5"/>
 
         <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind PositionResistanceIndicator.X}" Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
             <TextBlock Text="R: "/>

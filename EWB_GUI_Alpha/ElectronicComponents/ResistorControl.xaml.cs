@@ -21,8 +21,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 {
     public partial class ResistorControl : UserControl, IEComponent
     {
-        private Point PositionConnector_1 { get; set; } = new Point(0, 55);
-        private Point PositionConnector_2 { get; set; } = new Point(110, 55);
+        private Point PositionConnector_1 { get; set; } = new Point(-10, 50);
+        private Point PositionConnector_2 { get; set; } = new Point(110, 50);
         private Point PositionResistanceIndicator { get; set; } = new Point(50, 20);
 
         public Point CenterComponentOnCanvas
@@ -86,15 +86,19 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             if (Angle == 0)
             {
                 Angle = 90;
-                PositionConnector_1 = new Point(55, 0);
-                PositionConnector_2 = new Point(55, 110);
+                PositionConnector_1 = new Point(50, -10);
+                connector_1.PositionOnElement = Position.top;
+                PositionConnector_2 = new Point(50, 110);
+                connector_2.PositionOnElement = Position.bottom;
                 PositionResistanceIndicator = new Point(90, 50);
             }
             else
             {
                 Angle = 0;
-                PositionConnector_1 = new Point(0, 55);
-                PositionConnector_2 = new Point(110, 55);
+                PositionConnector_1 = new Point(-10, 50);
+                connector_1.PositionOnElement = Position.left;
+                PositionConnector_2 = new Point(110, 50);
+                connector_2.PositionOnElement = Position.right;
                 PositionResistanceIndicator = new Point(50, 20);
             }
             Bindings.Update();

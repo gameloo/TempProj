@@ -8,11 +8,11 @@
     mc:Ignorable="d"
     d:DesignHeight="20"
     d:DesignWidth="20"
-    
     Tapped="UserControl_Tapped">
 
     <!--<Grid>-->
-        <Ellipse Width="10" Height="10" Fill="Black"/>
+    
+        <Ellipse Width="20" Height="20" Fill="Black"/>
     <!--</Grid>-->
     <UserControl.ContextFlyout>
         <MenuFlyout>

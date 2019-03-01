@@ -8,17 +8,27 @@
     mc:Ignorable="d"
     >
 
-    <!--<Line Name="tempName" X1="{x:Bind pointConnector_1.X, Mode=OneWay}" X2="{x:Bind pointConnector_2.X, Mode=OneWay}" Y1="{x:Bind pointConnector_1.Y, Mode=OneWay}" Y2="{x:Bind pointConnector_2.Y, Mode=OneWay}" Stroke="Red" StrokeThickness="4"/>-->
-    <!--<Line Name="tempName"
-          X1="{Binding Source=connector_1,Path=PositionOnCanvas.X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-          X2="{Binding Source=connector_2,Path=PositionOnCanvas.X, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-          Y1="{Binding Source=connector_1,Path=PositionOnCanvas.Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-          Y2="{Binding Source=connector_2,Path=PositionOnCanvas.Y, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-          Stroke="Red" StrokeThickness="4"/>-->
-    <Line Name="tempName" X1="{x:Bind X1}" X2="{x:Bind X2}" Y1="{x:Bind Y1}" Y2="{x:Bind Y2}" Stroke="Red" StrokeThickness="4"/>
+    <!--<Line Name="tempName" X1="{x:Bind X1}" X2="{x:Bind X2}" Y1="{x:Bind Y1}" Y2="{x:Bind Y2}" Stroke="Red" StrokeThickness="4"/>-->
+
+    <Path x:Name="linePath" Stroke="Black" StrokeThickness="3"
+          
+          ManipulationMode="{x:Bind ManipulationModes}"
+          ManipulationStarting="LinePath_ManipulationStarting"
+          ManipulationDelta="Path_ManipulationDelta"
+          ManipulationCompleted="Path_ManipulationCompleted"
+          >
+        <Path.Data>
+            <GeometryGroup>
+                <LineGeometry x:Name="Line_1" StartPoint="{x:Bind connector_1.PositionOnCanvas}" EndPoint="{Binding ElementName=Line_2,Path=StartPoint}"/>
+
+                <LineGeometry x:Name="Line_2"/>
+                <LineGeometry x:Name="Line_3" StartPoint="{Binding ElementName=Line_2, Path=EndPoint}" EndPoint="{x:Bind connector_2.PositionOnCanvas}"/>
+            </GeometryGroup>
+        </Path.Data>
+    </Path>
     <UserControl.ContextFlyout>
         <MenuFlyout>
-            <MenuFlyoutItem Text="Удалить соединение"/>
+            <MenuFlyoutItem Text="Удалить соединение" Click="MenuFlyoutItem_Click"/>
         </MenuFlyout>
     </UserControl.ContextFlyout>
 </UserControl>
