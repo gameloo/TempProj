@@ -124,6 +124,12 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     }
                 case Orientation.HorizontalLeftRight:
                     {
+                        if (connector_1.PositionOnCanvas.Y == connector_2.PositionOnCanvas.Y)
+                        {
+                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, connector_1.PositionOnCanvas.Y + 60);
+                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, connector_2.PositionOnCanvas.Y + 60);
+                            break;
+                        }
                         double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
                         Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint + Math.Abs(connector_1.PositionOnCanvas.Y - connector_2.PositionOnCanvas.Y) / 2);
                         Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
@@ -319,7 +325,82 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                         }
                         break;
                     }
+                case Orientation.Medley:
+                    {
+                        double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
+                        double bottomPoint = connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
 
+                        if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y) // с1 выше
+                        {
+                            if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X) // c1 левее
+                            {
+
+
+                                if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
+                                    connector_1.PositionOnElement == Position.left ||
+                                    connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom
+                                    )
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
+                                }
+                                else
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
+                                }
+                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
+                            }
+                            else
+                            {
+                                if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
+                                   connector_1.PositionOnElement == Position.right ||
+                                   connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom
+                                   )
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
+                                }
+                                else
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
+                                }
+                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
+                            }
+                        }
+                        else
+                        {
+                            if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
+                            {
+                                if (connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom ||
+                                   connector_1.PositionOnElement == Position.bottom ||
+                                   connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.right
+                                   )
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
+                                }
+                                else
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
+                                }
+                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
+                            }
+                            else
+                            {
+                                if (connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom ||
+                                  connector_1.PositionOnElement == Position.bottom ||
+                                  connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.left
+                                  )
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
+                                }
+                                else
+                                {
+                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
+                                }
+                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
+                            }
+                        }
+
+                        break;
+                    }
             }
 
             Bindings.Update();
