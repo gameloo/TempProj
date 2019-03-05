@@ -32,11 +32,11 @@
         <local:ConnectorControl x:Name="connector_1" PositionOnElement="left"
                                 Canvas.Left="{x:Bind PositionConnector_1.X}"
                                 Canvas.Top="{x:Bind PositionConnector_1.Y}"
-                                Opacity="0.5"/>
+                                />
         <local:ConnectorControl x:Name="connector_2" PositionOnElement="right"
                                 Canvas.Left="{x:Bind PositionConnector_2.X}"
                                 Canvas.Top="{x:Bind PositionConnector_2.Y}"
-                                Opacity="0.5"/>
+                                />
 
         <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind PositionResistanceIndicator.X}" Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
             <TextBlock Text="R: "/>

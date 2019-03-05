@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -92,15 +93,37 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         }
 
+        private Point CursorPosition { get; set; }
+        // TEST
 
+        void OnPointerPressed_1(object sender, PointerRoutedEventArgs e)
+        {
+            
+            PointerPoint pp = e.GetCurrentPoint((Panel)VisualTreeHelper.GetParent(this));
+            CursorPosition = pp.Position;
+         }
+
+        void target_Tapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            
+        }
+        // %
         public WireControl()
         {
+            
             this.InitializeComponent();
+
+
+            this.PointerPressed += new PointerEventHandler(OnPointerPressed_1);
+            this.RightTapped += new RightTappedEventHandler(target_Tapped);
         }
 
         public WireControl(ConnectorControl connector_1, ConnectorControl connector_2)
         {
             this.InitializeComponent();
+            this.PointerPressed += new PointerEventHandler(OnPointerPressed_1);
+            this.RightTapped += new RightTappedEventHandler(target_Tapped);
+
 
             connector_1.update += Update;
             connector_2.update += Update;
@@ -425,8 +448,21 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+
             DependencyObject parent = VisualTreeHelper.GetParent(this);
             (parent as Panel).Children.Remove(this);
+        }
+
+        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            DependencyObject parent = VisualTreeHelper.GetParent(this);
+            (parent as Panel).Children.Add(new ConnectorControl(CursorPosition));
+            //DependencyObject parent = VisualTreeHelper.GetParent(this);
+            //var temp = new ConnectorControl() { PositionOnElement = Position.center };
+            //(parent as Panel).Children.Add(temp);
+            //Canvas.SetLeft(temp, CursorPosition.X - 10);
+            //Canvas.SetTop(temp, CursorPosition.Y - 10);
         }
     }
 }

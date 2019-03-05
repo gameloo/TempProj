@@ -25,7 +25,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         top,
         bottom,
         left,
-        right
+        right,
+        center
     }
 
 
@@ -67,24 +68,51 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
         }
 
+        private Func<Point> GetPositionOnCanvas;
+
         public void UpdatePositionOnCanvas()
         {
-            point = new Point(
-                    Canvas.GetLeft(
-                        (UIElement)VisualTreeHelper.GetParent(
-                            VisualTreeHelper.GetParent(this))
-                        ) + Canvas.GetLeft(this) + this.ActualHeight/2,
-                    Canvas.GetTop(
-                        (UIElement)VisualTreeHelper.GetParent(
-                            VisualTreeHelper.GetParent(this))
-                                ) + Canvas.GetTop(this) + this.ActualWidth/2
-                    );
+            point = GetPositionOnCanvas();
             update?.Invoke();
         }
 
         public ConnectorControl()
         {
             this.InitializeComponent();
+
+            GetPositionOnCanvas = () =>
+            {
+                return new Point(
+                    Canvas.GetLeft(
+                        (UIElement)VisualTreeHelper.GetParent(
+                            VisualTreeHelper.GetParent(this))
+                        ) + Canvas.GetLeft(this) + this.ActualHeight / 2,
+                    Canvas.GetTop(
+                        (UIElement)VisualTreeHelper.GetParent(
+                            VisualTreeHelper.GetParent(this))
+                                ) + Canvas.GetTop(this) + this.ActualWidth / 2
+                    );
+            };
+        }
+
+        public ConnectorControl(Point positionOnCanvas)
+        {
+            this.InitializeComponent();
+
+            GetPositionOnCanvas = () =>
+            {
+                return new Point(
+                    Canvas.GetLeft(this) + this.ActualHeight / 2,
+                    Canvas.GetTop(this) + this.ActualWidth / 2
+                    );
+            };
+
+            this.PositionOnElement = Position.center;
+
+            Canvas.SetLeft(this, positionOnCanvas.X - 10);
+            Canvas.SetTop(this, positionOnCanvas.Y - 10);
+
+
         }
 
         private void UserControl_Tapped(object sender, TappedRoutedEventArgs e)
