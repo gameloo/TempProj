@@ -55,12 +55,12 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         {
             if (connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.left)
             {
-                if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X) return Orientation.HorizontalRightLeft;
+                if (connector_1.PositionCleatOnCanvas.X < connector_2.PositionCleatOnCanvas.X) return Orientation.HorizontalRightLeft;
                 else return Orientation.HorizontalLeftRight;
             }
             else if (connector_2.PositionOnElement == Position.right && connector_1.PositionOnElement == Position.left)
             {
-                if (connector_2.PositionOnCanvas.X < connector_1.PositionOnCanvas.X) return Orientation.HorizontalRightLeft;
+                if (connector_2.PositionCleatOnCanvas.X < connector_1.PositionCleatOnCanvas.X) return Orientation.HorizontalRightLeft;
                 else return Orientation.HorizontalLeftRight;
             }
             else if (connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left)
@@ -73,12 +73,12 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
             else if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top)
             {
-                if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y) return Orientation.VerticalBottomTop;
+                if (connector_1.PositionCleatOnCanvas.Y < connector_2.PositionCleatOnCanvas.Y) return Orientation.VerticalBottomTop;
                 else return Orientation.VerticalTopBottom;
             }
             else if (connector_2.PositionOnElement == Position.bottom && connector_1.PositionOnElement == Position.top)
             {
-                if (connector_2.PositionOnCanvas.Y < connector_1.PositionOnCanvas.Y) return Orientation.VerticalBottomTop;
+                if (connector_2.PositionCleatOnCanvas.Y < connector_1.PositionCleatOnCanvas.Y) return Orientation.VerticalBottomTop;
                 else return Orientation.VerticalTopBottom;
             }
             else if (connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top)
@@ -96,343 +96,51 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         private Point CursorPosition { get; set; }
         // TEST
 
-        void OnPointerPressed_1(object sender, PointerRoutedEventArgs e)
+        void OnPressed(object sender, PointerRoutedEventArgs e)
         {
-            
-            PointerPoint pp = e.GetCurrentPoint((Panel)VisualTreeHelper.GetParent(this));
-            CursorPosition = pp.Position;
-         }
-
-        void target_Tapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            
+            CursorPosition = e.GetCurrentPoint(CustomVisualTreeHelper.KernelCanvas).Position;
         }
+
         // %
         public WireControl()
         {
-            
             this.InitializeComponent();
-
-
-            this.PointerPressed += new PointerEventHandler(OnPointerPressed_1);
-            this.RightTapped += new RightTappedEventHandler(target_Tapped);
+            this.PointerPressed += new PointerEventHandler(OnPressed);
         }
 
         public WireControl(ConnectorControl connector_1, ConnectorControl connector_2)
         {
             this.InitializeComponent();
-            this.PointerPressed += new PointerEventHandler(OnPointerPressed_1);
-            this.RightTapped += new RightTappedEventHandler(target_Tapped);
+            this.PointerPressed += new PointerEventHandler(OnPressed);
 
 
             connector_1.update += Update;
             connector_2.update += Update;
 
+            connector_1.update += Segment_1.Update;
+            connector_2.update += Segment_1.Update;
+
+
+            connector_1.delete += Segment_1.DeleteElement;
+            connector_2.delete += Segment_1.DeleteElement;
+
+            connector_1.delete += DeleteElement;
+            connector_2.delete += DeleteElement;
+
+
             this.connector_1 = connector_1;
             this.connector_2 = connector_2;
-            Update();
 
+            Update();
         }
 
         private void Update()
         {
-            switch (GetOrientaion())
-            {
-                case Orientation.HorizontalRightLeft:
-                    {
-                        double leftPoint = connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X ? connector_1.PositionOnCanvas.X : connector_2.PositionOnCanvas.X;
-                        Line_2.StartPoint = new Point(leftPoint + Math.Abs(connector_1.PositionOnCanvas.X - connector_2.PositionOnCanvas.X) / 2, connector_1.PositionOnCanvas.Y);
-                        Line_2.EndPoint = new Point(Line_2.StartPoint.X, connector_2.PositionOnCanvas.Y);
-                        break;
-                    }
-                case Orientation.HorizontalLeftRight:
-                    {
-                        if (connector_1.PositionOnCanvas.Y == connector_2.PositionOnCanvas.Y)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, connector_1.PositionOnCanvas.Y + 60);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, connector_2.PositionOnCanvas.Y + 60);
-                            break;
-                        }
-                        double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-                        Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint + Math.Abs(connector_1.PositionOnCanvas.Y - connector_2.PositionOnCanvas.Y) / 2);
-                        Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                        break;
-                    }
-                case Orientation.HorizontalLeftLeft:
-                    {
-
-                        if (connector_1.PositionOnCanvas.Y == connector_2.PositionOnCanvas.Y)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, connector_1.PositionOnCanvas.Y + 60);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, connector_2.PositionOnCanvas.Y + 60);
-                            break;
-                        }
-                        else
-                        {
-                            double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-                            double bottomPoint = connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-
-                            if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y)
-                            {
-                                if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                case Orientation.HorizontalRightRight:
-                    {
-
-                        if (connector_1.PositionOnCanvas.Y == connector_2.PositionOnCanvas.Y)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, connector_1.PositionOnCanvas.Y + 60);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, connector_2.PositionOnCanvas.Y + 60);
-                            break;
-                        }
-                        else
-                        {
-                            double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-                            double bottomPoint = connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-
-                            if (connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y)
-                            {
-                                if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                case Orientation.VerticalBottomTop:
-                    {
-                        double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-                        Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint + Math.Abs(connector_1.PositionOnCanvas.Y - connector_2.PositionOnCanvas.Y) / 2);
-                        Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                        break;
-                    }
-                case Orientation.VerticalTopBottom:
-                    {
-                        if (connector_1.PositionOnCanvas.X == connector_2.PositionOnCanvas.X)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X + 60, connector_1.PositionOnCanvas.Y);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X + 60, connector_2.PositionOnCanvas.Y);
-                        }
-                        else
-                        {
-                            double leftPoint = connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X ? connector_1.PositionOnCanvas.X : connector_2.PositionOnCanvas.X;
-                            Line_2.StartPoint = new Point(leftPoint + Math.Abs(connector_1.PositionOnCanvas.X - connector_2.PositionOnCanvas.X) / 2, connector_1.PositionOnCanvas.Y);
-                            Line_2.EndPoint = new Point(Line_2.StartPoint.X, connector_2.PositionOnCanvas.Y);
-
-                        }
-                        break;
-
-                    }
-                case Orientation.VerticalTopTop:
-                    {
-                        if (connector_1.PositionOnCanvas.X == connector_2.PositionOnCanvas.X)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X + 60, connector_1.PositionOnCanvas.Y);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X + 60, connector_2.PositionOnCanvas.Y);
-                        }
-                        else
-                        {
-                            double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-
-                            if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y)
-                            {
-                                if (connector_1.PositionOnCanvas.X > connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnCanvas.X > connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                case Orientation.VerticalBottomBottom:
-                    {
-                        if (connector_1.PositionOnCanvas.X == connector_2.PositionOnCanvas.X)
-                        {
-                            Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X + 60, connector_1.PositionOnCanvas.Y);
-                            Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X + 60, connector_2.PositionOnCanvas.Y);
-                        }
-                        else
-                        {
-                            double bottomPoint = connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-
-                            if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y)
-                            {
-                                if (connector_1.PositionOnCanvas.X > connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnCanvas.X > connector_2.PositionOnCanvas.X)
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                    Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                case Orientation.Medley:
-                    {
-                        double topPoint = connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-                        double bottomPoint = connector_1.PositionOnCanvas.Y > connector_2.PositionOnCanvas.Y ? connector_1.PositionOnCanvas.Y : connector_2.PositionOnCanvas.Y;
-
-                        if (connector_1.PositionOnCanvas.Y < connector_2.PositionOnCanvas.Y) // с1 выше
-                        {
-                            if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X) // c1 левее
-                            {
-
-
-                                if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
-                                    connector_1.PositionOnElement == Position.left ||
-                                    connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom
-                                    )
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                }
-                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
-                                   connector_1.PositionOnElement == Position.right ||
-                                   connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom
-                                   )
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                }
-                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                            }
-                        }
-                        else
-                        {
-                            if (connector_1.PositionOnCanvas.X < connector_2.PositionOnCanvas.X)
-                            {
-                                if (connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom ||
-                                   connector_1.PositionOnElement == Position.bottom ||
-                                   connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.right
-                                   )
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                }
-                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                            }
-                            else
-                            {
-                                if (connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom ||
-                                  connector_1.PositionOnElement == Position.bottom ||
-                                  connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.left
-                                  )
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, bottomPoint);
-                                }
-                                else
-                                {
-                                    Line_2.StartPoint = new Point(connector_1.PositionOnCanvas.X, topPoint);
-                                }
-                                Line_2.EndPoint = new Point(connector_2.PositionOnCanvas.X, Line_2.StartPoint.Y);
-                            }
-                        }
-
-                        break;
-                    }
-            }
-
             Bindings.Update();
         }
 
         private void Path_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            Line_2.StartPoint = new Point(Line_2.StartPoint.X + e.Delta.Translation.X, Line_2.StartPoint.Y + e.Delta.Translation.Y);
-            Line_2.EndPoint = new Point(Line_2.EndPoint.X + e.Delta.Translation.X, Line_2.EndPoint.Y + e.Delta.Translation.Y);
+        {  
             Bindings.Update();
         }
 
@@ -446,23 +154,18 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             Bindings.Update();
         }
 
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        public void DeleteElement()
         {
-
-            DependencyObject parent = VisualTreeHelper.GetParent(this);
-            (parent as Panel).Children.Remove(this);
+            CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
 
-        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
-        {
 
-            DependencyObject parent = VisualTreeHelper.GetParent(this);
-            (parent as Panel).Children.Add(new ConnectorControl(CursorPosition));
-            //DependencyObject parent = VisualTreeHelper.GetParent(this);
-            //var temp = new ConnectorControl() { PositionOnElement = Position.center };
-            //(parent as Panel).Children.Add(temp);
-            //Canvas.SetLeft(temp, CursorPosition.X - 10);
-            //Canvas.SetTop(temp, CursorPosition.Y - 10);
+        private void MenuFlyoutItem_AddConnector(object sender, RoutedEventArgs e)
+        {
+            var connector = new ConnectorControl() { PositionOnElement = Position.center };
+            CustomVisualTreeHelper.KernelCanvas.Children.Add(connector);
+            Canvas.SetLeft(connector, CursorPosition.X - 10);
+            Canvas.SetTop(connector, CursorPosition.Y - 10);
         }
     }
 }

@@ -40,6 +40,9 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         public delegate void Update();
         public Update update;
 
+        public delegate void Delete();
+        public Delete delete;
+
         // Test /!\
 
         public static readonly DependencyProperty PosProperty =
@@ -55,64 +58,20 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         // *
 
-        private Point point;
-        public Point PositionOnCanvas
+        public Point PositionCleatOnCanvas
         {
             get
             {
-                return point;
+                return new Point(
+                    CustomVisualTreeHelper.PositionElementOnKernelCanvas(this).X + this.ActualHeight / 2,
+                    CustomVisualTreeHelper.PositionElementOnKernelCanvas(this).Y + this.ActualWidth / 2
+                    );
             }
-            private set
-            {
-                point = value;
-            }
-        }
-
-        private Func<Point> GetPositionOnCanvas;
-
-        public void UpdatePositionOnCanvas()
-        {
-            point = GetPositionOnCanvas();
-            update?.Invoke();
         }
 
         public ConnectorControl()
         {
-            this.InitializeComponent();
-
-            GetPositionOnCanvas = () =>
-            {
-                return new Point(
-                    Canvas.GetLeft(
-                        (UIElement)VisualTreeHelper.GetParent(
-                            VisualTreeHelper.GetParent(this))
-                        ) + Canvas.GetLeft(this) + this.ActualHeight / 2,
-                    Canvas.GetTop(
-                        (UIElement)VisualTreeHelper.GetParent(
-                            VisualTreeHelper.GetParent(this))
-                                ) + Canvas.GetTop(this) + this.ActualWidth / 2
-                    );
-            };
-        }
-
-        public ConnectorControl(Point positionOnCanvas)
-        {
-            this.InitializeComponent();
-
-            GetPositionOnCanvas = () =>
-            {
-                return new Point(
-                    Canvas.GetLeft(this) + this.ActualHeight / 2,
-                    Canvas.GetTop(this) + this.ActualWidth / 2
-                    );
-            };
-
-            this.PositionOnElement = Position.center;
-
-            Canvas.SetLeft(this, positionOnCanvas.X - 10);
-            Canvas.SetTop(this, positionOnCanvas.Y - 10);
-
-
+            this.InitializeComponent(); 
         }
 
         private void UserControl_Tapped(object sender, TappedRoutedEventArgs e)
@@ -126,12 +85,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             {
                 if (!ConnectedConnectorProperty.Equals(this))
                 {
-                    DependencyObject parent1 = VisualTreeHelper.GetParent(this);
-                    DependencyObject parent = VisualTreeHelper.GetParent(parent1);
-                    DependencyObject canvas = VisualTreeHelper.GetParent(parent);
-                    (canvas as Panel).Children.Add(
-                        new WireControl(ConnectedConnectorProperty, this)
-                        );
+                    CustomVisualTreeHelper.KernelCanvas.Children.Add(new WireControl(ConnectedConnectorProperty, this));
                 }
                 isClick = false;
             }

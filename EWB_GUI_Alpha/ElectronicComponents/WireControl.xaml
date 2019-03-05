@@ -8,8 +8,14 @@
     mc:Ignorable="d"
     >
 
-    <!--<Line Name="tempName" X1="{x:Bind X1}" X2="{x:Bind X2}" Y1="{x:Bind Y1}" Y2="{x:Bind Y2}" Stroke="Red" StrokeThickness="4"/>-->
-    <Path x:Name="linePath" Stroke="Black" StrokeThickness="3"
+    <Canvas>
+        <local:UISegmentWire x:Name="Segment_1" StartPoint="{x:Bind connector_1.PositionCleatOnCanvas}" EndPoint="{x:Bind connector_2.PositionCleatOnCanvas}"/>
+
+
+    </Canvas>
+    
+    
+    <!--<Path x:Name="linePath" Stroke="Black" StrokeThickness="3"
           
           ManipulationMode="{x:Bind ManipulationModes}"
           ManipulationStarting="LinePath_ManipulationStarting"
@@ -25,11 +31,11 @@
 
             </GeometryGroup>
         </Path.Data>
-    </Path>
-    <UserControl.ContextFlyout>
+    </Path>-->
+    <!--<UserControl.ContextFlyout>
         <MenuFlyout>
-            <MenuFlyoutItem Text="Добавить узел" Click="MenuFlyoutItem_Click_1"/>
-            <MenuFlyoutItem Text="Удалить соединение" Click="MenuFlyoutItem_Click"/>
+            <MenuFlyoutItem Text="Добавить узел" Click="MenuFlyoutItem_AddConnector"/>
+            <MenuFlyoutItem Text="Удалить соединение" Click="MenuFlyoutItem_Remove"/>
         </MenuFlyout>
-    </UserControl.ContextFlyout>
+    </UserControl.ContextFlyout>-->
 </UserControl>

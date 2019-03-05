@@ -28,6 +28,7 @@ namespace EWB_GUI_Alpha
         public MainPage()
         {
             this.InitializeComponent();
+            CustomVisualTreeHelper.KernelCanvas = cWorkSpace;
         }
 
 

@@ -107,14 +107,15 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void DeleteElement(object sender, RoutedEventArgs e)
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(this);
-            (parent as Panel).Children.Remove(this);
+            connector_1.delete?.Invoke();
+            connector_2.delete?.Invoke();
+            CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
 
         public void ChildrenPositionUpdate()
         {
-            connector_1.UpdatePositionOnCanvas(); //! Test
-            connector_2.UpdatePositionOnCanvas(); //! Test
+            connector_1.update?.Invoke();
+            connector_2.update?.Invoke();
         }
     }
 }
