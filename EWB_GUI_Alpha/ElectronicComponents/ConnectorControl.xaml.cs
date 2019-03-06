@@ -71,7 +71,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         public ConnectorControl()
         {
-            this.InitializeComponent(); 
+            this.InitializeComponent();
+
         }
 
         private void UserControl_Tapped(object sender, TappedRoutedEventArgs e)

@@ -120,6 +120,9 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             DeleteElement();
         }
 
+        public delegate void Delete();
+        public Delete delete;
+
         public void DeleteElement()
         {
             if (connectors.Count != 0)
@@ -129,6 +132,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     pair.Key.delete?.Invoke();
                 }
             }
+            delete();
         }
 
         void OnPressed(object sender, PointerRoutedEventArgs e)

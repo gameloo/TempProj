@@ -108,6 +108,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             this.PointerPressed += new PointerEventHandler(OnPressed);
         }
 
+
+
         public WireControl(ConnectorControl connector_1, ConnectorControl connector_2)
         {
             this.InitializeComponent();
@@ -124,9 +126,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             connector_1.delete += Segment_1.DeleteElement;
             connector_2.delete += Segment_1.DeleteElement;
 
-            connector_1.delete += DeleteElement;
-            connector_2.delete += DeleteElement;
-
+            Segment_1.delete += DeleteElement;
 
             this.connector_1 = connector_1;
             this.connector_2 = connector_2;
@@ -153,6 +153,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         {
             Bindings.Update();
         }
+
+        
 
         public void DeleteElement()
         {
