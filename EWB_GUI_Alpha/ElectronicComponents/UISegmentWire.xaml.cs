@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -42,18 +44,14 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         }
 
         public Point CursorPosition { get; private set; }
-
-
+        Dictionary<ConnectorControl, double> connectors;
 
         public UISegmentWire()
         {
             this.InitializeComponent();
             this.PointerPressed += new PointerEventHandler(OnPressed);
-
             connectors = new Dictionary<ConnectorControl, double>();
         }
-
-
 
         public void Update()
         {
@@ -76,12 +74,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 }
             }
 
-
             Bindings.Update();
         }
-
-
-        Dictionary<ConnectorControl, double> connectors;
 
         private void MenuFlyoutItem_AddConnector(object sender, RoutedEventArgs e)
         {
@@ -132,7 +126,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     pair.Key.delete?.Invoke();
                 }
             }
-            delete();
+            delete?.Invoke();
         }
 
         void OnPressed(object sender, PointerRoutedEventArgs e)
