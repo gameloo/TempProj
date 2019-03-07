@@ -189,8 +189,14 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // C1 Левее
                 if (connector_1.PositionCleatOnCanvas.X < connector_2.PositionCleatOnCanvas.X)
                 {
+                    if(connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    {
+                        SetPositionMidleHorizontal(Segment_2);
+                    }
                     //  S2 on Bot
-                    if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
+                    else
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement != Position.right ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
@@ -265,9 +271,14 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // С1 Правее
                 else
                 {
-
+                    if(connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    {
+                        SetPositionMidleHorizontal(Segment_2);
+                    }
                     //  S2 on Bot
-                    if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
+                    else
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement != Position.left ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom ||

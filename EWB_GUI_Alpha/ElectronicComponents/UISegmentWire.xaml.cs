@@ -79,7 +79,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void MenuFlyoutItem_AddConnector(object sender, RoutedEventArgs e)
         {
-            var tempConnector = new ConnectorControl() { PositionOnElement = Position.bottom };
+            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center };
             container.Children.Add(tempConnector);
 
             if (StartPoint.X == EndPoint.X)
