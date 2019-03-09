@@ -15,6 +15,7 @@
             <Canvas Name="cWorkSpace" Background="White" Height="2400" Width="2400">
                 <Canvas.ContextFlyout>
                     <MenuFlyout>
+                        <MenuFlyoutItem Text="Добавить узел" Click="AddNewConnector"/>
                         <MenuFlyoutSubItem Text="Добавть элемент">
                             <MenuFlyoutItem Text="Резистор" Click="AddResistor"/>
                             <MenuFlyoutItem Text="Конденсатор"/>

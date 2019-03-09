@@ -25,16 +25,21 @@ namespace EWB_GUI_Alpha
     {
         private Type repeatElementType;
 
+        private Point CursorPosition { get; set; }
+        void OnPressed(object sender, PointerRoutedEventArgs e)
+        {
+            CursorPosition = e.GetCurrentPoint(CustomVisualTreeHelper.KernelCanvas).Position;
+        }
         public MainPage()
         {
             this.InitializeComponent();
             CustomVisualTreeHelper.KernelCanvas = cWorkSpace;
+            this.PointerPressed += new PointerEventHandler(OnPressed);
         }
 
 
         private void AddResistor(object sender, RoutedEventArgs e)
         {
-            //Control.PointerMovedEvent;
             cWorkSpace.Children.Add(new ResistorControl());
             repeatElementType = typeof(ResistorControl);
         }
@@ -47,6 +52,16 @@ namespace EWB_GUI_Alpha
                     cWorkSpace.Children.Add(new ResistorControl());
                 else throw new Exception();
             }
+        }
+
+        private void AddNewConnector(object sender, RoutedEventArgs e)
+        {
+            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center, ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY };
+            cWorkSpace.Children.Add(tempConnector);
+            tempConnector.AddMenuFlyout();
+            Canvas.SetLeft(tempConnector, CursorPosition.X);
+            Canvas.SetTop(tempConnector, CursorPosition.Y);
+
         }
     }
 }

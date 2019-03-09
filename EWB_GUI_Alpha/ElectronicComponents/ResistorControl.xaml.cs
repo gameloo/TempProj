@@ -25,60 +25,18 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         private Point PositionConnector_2 { get; set; } = new Point(110, 50);
         private Point PositionResistanceIndicator { get; set; } = new Point(50, 20);
 
-        public Point CenterComponentOnCanvas
+        public Point CenterComponent
         {
-            get
-            {
-                return new Point(
-                    Canvas.GetLeft(this) + this.ActualHeight / 2,
-                    Canvas.GetTop(this) + this.ActualWidth / 2
-                    );
-            }
+            get { return new Point(ActualWidth / 2, this.ActualHeight / 2); }
         }
-
-        public PointCollection CurrentPositionComponentOnCanvas
-        {
-            get
-            {
-                return new PointCollection()
-                {
-                    new Point(
-                        Canvas.GetLeft(this),
-                        Canvas.GetTop(this)
-                        ),
-                    new Point(
-                        Canvas.GetLeft(this) + this.ActualHeight,
-                        Canvas.GetTop(this) + this.ActualWidth
-                        )
-                };
-            }
-        }
-
-        public PointCollection OldPositionComponentOnCanvas { get; set; }
-
-        public Point PositionOnCanvas
-        {
-            get
-            {
-                return new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
-            }
-        }
+        public Point OldPositionComponentOnCanvas { get; set; }
 
         public double Angle { get; set; }
-
         public double ResistanceValue { get; set; }
-
 
         public ResistorControl()
         {
             this.InitializeComponent();
-        }
-
-        public ResistorControl(ResistorControl resistorControl)
-        {
-            this.InitializeComponent();
-            this.Angle = resistorControl.Angle;
-            this.ResistanceValue = resistorControl.ResistanceValue;
         }
 
         public void RotateComponent(object sender, RoutedEventArgs e)
@@ -107,15 +65,15 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void DeleteElement(object sender, RoutedEventArgs e)
         {
-            connector_1.delete?.Invoke();
-            connector_2.delete?.Invoke();
+            connector_1.OnDeleteComponent?.Invoke();
+            connector_2.OnDeleteComponent?.Invoke();
             CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
 
         public void ChildrenPositionUpdate()
         {
-            connector_1.update?.Invoke();
-            connector_2.update?.Invoke();
+            connector_1.ChildrenPositionUpdate();
+            connector_2.ChildrenPositionUpdate();
         }
     }
 }

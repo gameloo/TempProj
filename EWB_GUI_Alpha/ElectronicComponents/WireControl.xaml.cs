@@ -18,21 +18,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace EWB_GUI_Alpha.ElectronicComponents
 {
-
-    //public enum Orientation
-    //{
-    //    HorizontalRightLeft,
-    //    HorizontalLeftRight,
-    //    HorizontalLeftLeft,
-    //    HorizontalRightRight,
-    //    VerticalBottomTop,
-    //    VerticalTopBottom,
-    //    VerticalBottomBottom,
-    //    VerticalTopTop,
-    //    Medley
-    //}
-
-
     public sealed partial class WireControl : UserControl
     {
 
@@ -42,118 +27,37 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         private ConnectorControl connector_1;
         private ConnectorControl connector_2;
 
-        //private ManipulationModes ManipulationModes
-        //{
-        //    get
-        //    {
-        //        if (GetOrientaion() == Orientation.HorizontalRightLeft ||
-        //            GetOrientaion() == Orientation.VerticalTopBottom ||
-        //             GetOrientaion() == Orientation.VerticalTopTop ||
-        //              GetOrientaion() == Orientation.VerticalBottomBottom)
-        //            return ManipulationModes.TranslateX;
-        //        else return ManipulationModes.TranslateY;
-        //    }
-
-        //}
-
-        //private Orientation GetOrientaion()
-        //{
-        //    if (connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.left)
-        //    {
-        //        if (connector_1.PositionCleatOnCanvas.X < connector_2.PositionCleatOnCanvas.X) return Orientation.HorizontalRightLeft;
-        //        else return Orientation.HorizontalLeftRight;
-        //    }
-        //    else if (connector_2.PositionOnElement == Position.right && connector_1.PositionOnElement == Position.left)
-        //    {
-        //        if (connector_2.PositionCleatOnCanvas.X < connector_1.PositionCleatOnCanvas.X) return Orientation.HorizontalRightLeft;
-        //        else return Orientation.HorizontalLeftRight;
-        //    }
-        //    else if (connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left)
-        //    {
-        //        return Orientation.HorizontalLeftLeft;
-        //    }
-        //    else if (connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.right)
-        //    {
-        //        return Orientation.HorizontalRightRight;
-        //    }
-        //    else if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top)
-        //    {
-        //        if (connector_1.PositionCleatOnCanvas.Y < connector_2.PositionCleatOnCanvas.Y) return Orientation.VerticalBottomTop;
-        //        else return Orientation.VerticalTopBottom;
-        //    }
-        //    else if (connector_2.PositionOnElement == Position.bottom && connector_1.PositionOnElement == Position.top)
-        //    {
-        //        if (connector_2.PositionCleatOnCanvas.Y < connector_1.PositionCleatOnCanvas.Y) return Orientation.VerticalBottomTop;
-        //        else return Orientation.VerticalTopBottom;
-        //    }
-        //    else if (connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top)
-        //    {
-        //        return Orientation.VerticalTopTop;
-        //    }
-        //    else if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom)
-        //    {
-        //        return Orientation.VerticalBottomBottom;
-        //    }
-        //    else return Orientation.Medley;
-
-        //}
-
         private Point CursorPosition { get; set; }
-        // TEST
+        private UpdateComponentPosition UpdateSegmentsPosition { get; set; }
 
-        void OnPressed(object sender, PointerRoutedEventArgs e)
-        {
-            CursorPosition = e.GetCurrentPoint(CustomVisualTreeHelper.KernelCanvas).Position;
-            Bindings.Update();
-        }
-
-        // %
         public WireControl()
         {
             this.InitializeComponent();
-            this.PointerPressed += new PointerEventHandler(OnPressed);
         }
-
-
 
         public WireControl(ConnectorControl connector_1, ConnectorControl connector_2)
         {
             this.InitializeComponent();
-            this.PointerPressed += new PointerEventHandler(OnPressed);
-
-
-            connector_1.update += Update;
-            connector_2.update += Update;
-
-            connector_1.update += Segment_1.Update;
-            connector_2.update += Segment_1.Update;
-
-            connector_1.update += Segment_2.Update;
-            connector_2.update += Segment_2.Update;
-
-            connector_1.update += Segment_3.Update;
-            connector_2.update += Segment_3.Update;
-
-            connector_1.delete += Segment_1.DeleteElement;
-            connector_2.delete += Segment_1.DeleteElement;
-            connector_1.delete += Segment_2.DeleteElement;
-            connector_2.delete += Segment_2.DeleteElement;
-            connector_1.delete += Segment_3.DeleteElement;
-            connector_2.delete += Segment_3.DeleteElement;
-
-            Segment_1.delete += DeleteElement;
-            Segment_2.delete += DeleteElement;
-            Segment_3.delete += DeleteElement;
 
             this.connector_1 = connector_1;
             this.connector_2 = connector_2;
 
+            UpdateSegmentsPosition += Update;
+            UpdateSegmentsPosition += Segment_1.Update;
+            UpdateSegmentsPosition += Segment_2.Update;
+            UpdateSegmentsPosition += Segment_3.Update;
 
+            connector_1.OnChangeElementPosition += UpdateSegmentsPosition;
+            connector_2.OnChangeElementPosition += UpdateSegmentsPosition;
+            connector_1.OnDeleteComponent += DeleteElement;
+            connector_2.OnDeleteComponent += DeleteElement;
 
+            Segment_1.OnClickDeleteSegmentWire += DeleteElement;
+            Segment_2.OnClickDeleteSegmentWire += DeleteElement;
+            Segment_3.OnClickDeleteSegmentWire += DeleteElement;
 
-            Update();
+            UpdateSegmentsPosition();
         }
-
 
         private void Update()
         {
@@ -531,37 +435,9 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             Bindings.Update();
         }
 
-
-
-        private void Path_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            Bindings.Update();
-        }
-
-        private void Path_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
-        {
-
-        }
-
-        private void LinePath_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
-        {
-            Bindings.Update();
-        }
-
-
-
         private void DeleteElement()
         {
             CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
-        }
-
-
-        private void MenuFlyoutItem_AddConnector(object sender, RoutedEventArgs e)
-        {
-            var connector = new ConnectorControl() { PositionOnElement = Position.center };
-            CustomVisualTreeHelper.KernelCanvas.Children.Add(connector);
-            Canvas.SetLeft(connector, CursorPosition.X - 10);
-            Canvas.SetTop(connector, CursorPosition.Y - 10);
         }
     }
 }

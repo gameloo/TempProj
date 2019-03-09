@@ -12,8 +12,8 @@
     ManipulationStarted="UserControl_ManipulationStarted"
     ManipulationDelta="UserControl_ManipulationDelta"
     ManipulationCompleted="UserControl_ManipulationCompleted"
-    ManipulationMode="TranslateX, TranslateY">
-    <!--ManipulationDelta="UserControl_ManipulationDelta"-->
+    ManipulationMode="TranslateX, TranslateY"
+    Canvas.ZIndex="3">
 
     <Canvas Background="White" Width="120" Height="120">
         <Path Stroke="Black" StrokeThickness="3">
@@ -29,14 +29,16 @@
             </Path.RenderTransform>
         </Path>
 
-        <local:ConnectorControl x:Name="connector_1" PositionOnElement="left"
+        <local:ConnectorControl x:Name="connector_1"
+                                ManipulationMode="None"
+                                PositionOnElement="left"
                                 Canvas.Left="{x:Bind PositionConnector_1.X}"
-                                Canvas.Top="{x:Bind PositionConnector_1.Y}"
-                                />
-        <local:ConnectorControl x:Name="connector_2" PositionOnElement="right"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"/>
+        <local:ConnectorControl x:Name="connector_2"
+                                ManipulationMode="None"
+                                PositionOnElement="right"
                                 Canvas.Left="{x:Bind PositionConnector_2.X}"
-                                Canvas.Top="{x:Bind PositionConnector_2.Y}"
-                                />
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
 
         <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind PositionResistanceIndicator.X}" Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
             <TextBlock Text="R: "/>

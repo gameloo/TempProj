@@ -11,11 +11,13 @@ using Windows.UI.Xaml.Media;
 
 namespace EWB_GUI_Alpha.ElectronicComponents
 {
+    public delegate void UpdateComponentPosition();
+    public delegate void DeleteComponent();
+
     public interface IEComponent
     {
-        Point CenterComponentOnCanvas { get; }
-        PointCollection CurrentPositionComponentOnCanvas { get; }
-        PointCollection OldPositionComponentOnCanvas { get; set; }
+        Point CenterComponent { get; }
+        Point OldPositionComponentOnCanvas { get; set; }
 
         void RotateComponent(object sender, RoutedEventArgs e);
         void ChildrenPositionUpdate();
@@ -24,33 +26,45 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
     public static class IEComponentExtend
     {
+        private static Point GetCenterComponentOnCanvas(UIElement element)
+        {
+            var CurrentPositionComponentOnCanvas = CustomVisualTreeHelper.PositionElementOnKernelCanvas(element);
+            return new Point(
+                (element as IEComponent).CenterComponent.X + CurrentPositionComponentOnCanvas.X,
+                (element as IEComponent).CenterComponent.Y + CurrentPositionComponentOnCanvas.Y
+                );
+        }
+
         public static void UserControl_ManipulationStarted(this IEComponent component, object sender, ManipulationStartedRoutedEventArgs e)
         {
-            ((IEComponent)sender).OldPositionComponentOnCanvas = ((IEComponent)sender).CurrentPositionComponentOnCanvas;
+            (sender as IEComponent).OldPositionComponentOnCanvas = CustomVisualTreeHelper.PositionElementOnKernelCanvas(sender as UIElement);
         }
 
         public static void UserControl_ManipulationDelta(this IEComponent component, object sender, ManipulationDeltaRoutedEventArgs e)
         {
             var left = Canvas.GetLeft((UIElement)sender) + e.Delta.Translation.X;
             var top = Canvas.GetTop((UIElement)sender) + e.Delta.Translation.Y;
-            Canvas.SetLeft((UIElement)component, left);
-            Canvas.SetTop((UIElement)component, top);
-            ((IEComponent)sender).ChildrenPositionUpdate();
+            Canvas.SetLeft((UIElement)sender, left);
+            Canvas.SetTop((UIElement)sender, top);
+            (sender as IEComponent).ChildrenPositionUpdate();          
         }
 
-        public static void UserControl_ManipulationCompleted(this IEComponent component, object sender, ManipulationCompletedRoutedEventArgs e) 
+        public static void UserControl_ManipulationCompleted(this IEComponent component, object sender, ManipulationCompletedRoutedEventArgs e)
         {
-            var left = Math.Round((sender as IEComponent).CurrentPositionComponentOnCanvas[0].X); // Убрать Round?
-            var top = Math.Round((sender as IEComponent).CurrentPositionComponentOnCanvas[0].Y);
+            var currentPositionComponentOnCanvas = CustomVisualTreeHelper.PositionElementOnKernelCanvas(sender as UIElement);
+            var left = Math.Round(currentPositionComponentOnCanvas.X); // Убрать Round?
+            var top = Math.Round(currentPositionComponentOnCanvas.Y);
 
             // Выравнивание элемента по центру
+            var centerComponentOnCanvas = GetCenterComponentOnCanvas(sender as UIElement);
+
             var step = 20;
-            var deltaX = Math.Round((sender as IEComponent).CenterComponentOnCanvas.X) % step;
+            var deltaX = Math.Round(centerComponentOnCanvas.X) % step;
             if (deltaX < step / 2)
                 left -= deltaX;
             else left += (step - deltaX);
 
-            var deltaY = Math.Round((sender as IEComponent).CenterComponentOnCanvas.Y) % step;
+            var deltaY = Math.Round(centerComponentOnCanvas.Y) % step;
             if (deltaY < step / 2)
                 top -= deltaY;
             else top += (step - deltaY);
@@ -63,51 +77,49 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             Canvas.SetLeft((UIElement)sender, left);
             Canvas.SetTop((UIElement)sender, top);
 
-            if (IsIntersectOnCanvas((IEComponent)sender))
+            if (IsIntersectOnCanvas(sender as UIElement))
             {
-                Canvas.SetLeft((UIElement)sender, ((IEComponent)sender).OldPositionComponentOnCanvas[0].X);
-                Canvas.SetTop((UIElement)sender, ((IEComponent)sender).OldPositionComponentOnCanvas[0].Y);
+                Canvas.SetLeft((UIElement)sender, (sender as IEComponent).OldPositionComponentOnCanvas.X);
+                Canvas.SetTop((UIElement)sender, (sender as IEComponent).OldPositionComponentOnCanvas.Y);
             }
 
-            ((IEComponent)sender).ChildrenPositionUpdate();
+            (sender as IEComponent).ChildrenPositionUpdate();
         }
 
         // Проверка на пересечение с другими элементами в Canvas
-        public static bool IsIntersectOnCanvas(IEComponent element)
+        public static bool IsIntersectOnCanvas(UIElement element)
         {
-            var currentPos = element.CurrentPositionComponentOnCanvas;
-
-            DependencyObject parent = VisualTreeHelper.GetParent((UIElement)element);
+            var currentPos = CustomVisualTreeHelper.PositionElementOnKernelCanvas(element);
             var uIElement =
-                (parent as Panel).Children.
+                CustomVisualTreeHelper.KernelCanvas.Children.
                 Where(e =>
                     {
                         return (e is IEComponent) && (!e.Equals(element));
                     }).
                 FirstOrDefault(e =>
                 {
+                    var currentPos_e = CustomVisualTreeHelper.PositionElementOnKernelCanvas(e);
                     return (
                     // Находится ли левый верхний угол элемента (element) в области элемента (e)
-                    (currentPos[0].X >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].X) &&
-                    (currentPos[0].X <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].X) &&
-                    (currentPos[0].Y >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].Y) &&
-                    (currentPos[0].Y <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].Y) ||
+                    (currentPos.X >= currentPos_e.X) &&
+                    (currentPos.X <= (currentPos_e.X + e.DesiredSize.Width)) &&
+                    (currentPos.Y >= currentPos_e.Y) &&
+                    (currentPos.Y <= (currentPos_e.Y + e.DesiredSize.Height)) ||
                     // *
                     // Находится ли нижний правый угол элемента (element) в области элемента (e)
-                    (currentPos[1].X >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].X) &&
-                    (currentPos[1].X <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].X) &&
-                    (currentPos[1].Y >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].Y) &&
-                    (currentPos[1].Y <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].Y) ||
+                    (currentPos.X + element.DesiredSize.Width >= currentPos_e.X) &&
+                    (currentPos.X + element.DesiredSize.Width <= (currentPos_e.X + e.DesiredSize.Width)) &&
+                    (currentPos.Y + element.DesiredSize.Height >= currentPos_e.Y) &&
+                    (currentPos.Y + element.DesiredSize.Height <= (currentPos_e.Y + e.DesiredSize.Height)) ||
                     // *
-                    (currentPos[1].X >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].X) &&
-                    (currentPos[0].X <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].X) &&
-                    (currentPos[1].Y >= ((IEComponent)e).CurrentPositionComponentOnCanvas[0].Y) &&
-                    (currentPos[0].Y <= ((IEComponent)e).CurrentPositionComponentOnCanvas[1].Y)
+                    (currentPos.X + element.DesiredSize.Width >= currentPos_e.X) &&
+                    (currentPos.X <= (currentPos_e.X + e.DesiredSize.Width)) &&
+                    (currentPos.Y + element.DesiredSize.Height >= currentPos_e.Y) &&
+                    (currentPos.Y <= (currentPos_e.Y + e.DesiredSize.Height))
                     );
                 });
 
-            if (uIElement == null) return false;
-            else return true;
+            return uIElement == null ? false : true;
         }
     }
 }

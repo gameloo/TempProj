@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
-// Документацию по шаблону элемента "Пользовательский элемент управления" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace EWB_GUI_Alpha.ElectronicComponents
 {
     public enum Position
@@ -30,21 +28,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
     }
 
 
-    public sealed partial class ConnectorControl : UserControl
+    public sealed partial class ConnectorControl : UserControl, IEComponent
     {
-        // Private static fields
-        private static bool isClick = false;
-        private static ConnectorControl ConnectedConnectorProperty;
-        //*
-
-        public delegate void Update();
-        public Update update;
-
-        public delegate void Delete();
-        public Delete delete;
-
-        // Test /!\
-
         public static readonly DependencyProperty PosProperty =
             DependencyProperty.Register(
                 "PositionOnElement", typeof(Position),
@@ -55,8 +40,17 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             get { return (Position)GetValue(PosProperty); }
             set { SetValue(PosProperty, value); }
         }
+        public UpdateComponentPosition OnChangeElementPosition { get; set; }
+        public DeleteComponent OnDeleteComponent { get; set; }
+        private static bool isClick = false;
+        private static ConnectorControl ConnectedConnectorProperty;
 
-        // *
+        public Point CenterComponent { get { return new Point(10, 10); } }
+        public Point OldPositionComponentOnCanvas { get; set; }
+
+
+        public void RotateComponent(object sender, RoutedEventArgs e) { }
+        public void ChildrenPositionUpdate() { OnChangeElementPosition?.Invoke(); }
 
         public Point PositionCleatOnCanvas
         {
@@ -69,10 +63,17 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
         }
 
+
         public ConnectorControl()
         {
             this.InitializeComponent();
+        }
 
+        public void AddMenuFlyout()
+        {
+            var mfItem = new MenuFlyoutItem() { Text = "Удалить" };
+            mfItem.Click += DeleteConnector;
+            mfConnector.Items.Add(mfItem);
         }
 
         private void UserControl_Tapped(object sender, TappedRoutedEventArgs e)
@@ -92,5 +93,10 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
         }
 
+        private void DeleteConnector(object sender, RoutedEventArgs e)
+        {
+            OnDeleteComponent?.Invoke();
+            CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
+        }
     }
 }

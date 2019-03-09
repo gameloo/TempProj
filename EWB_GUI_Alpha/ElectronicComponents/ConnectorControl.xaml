@@ -8,16 +8,17 @@
     mc:Ignorable="d"
     d:DesignHeight="20"
     d:DesignWidth="20"
-    Tapped="UserControl_Tapped">
+    ManipulationStarted="UserControl_ManipulationStarted"
+    ManipulationDelta="UserControl_ManipulationDelta"
+    ManipulationCompleted="UserControl_ManipulationCompleted"
+    Tapped="UserControl_Tapped"
+    Canvas.ZIndex="9">
 
     <Grid>
-        
         <Ellipse Width="20" Height="20" Fill="Black" Opacity="0"/>
         <Ellipse Width="10" Height="10" Fill="Black" Opacity="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
     <UserControl.ContextFlyout>
-        <MenuFlyout>
-            <MenuFlyoutItem Text="Удалить соединение"/>
-        </MenuFlyout>
+        <MenuFlyout x:Name="mfConnector"/>
     </UserControl.ContextFlyout>
 </UserControl>
