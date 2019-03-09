@@ -15,7 +15,7 @@
     Canvas.ZIndex="9">
 
     <Grid>
-        <Ellipse Width="20" Height="20" Fill="Black" Opacity="0"/>
+        <Ellipse Name="stroke" Width="20" Height="20" Fill="Black" Opacity="0" Canvas.ZIndex="1"/>
         <Ellipse Width="10" Height="10" Fill="Black" Opacity="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
     <UserControl.ContextFlyout>

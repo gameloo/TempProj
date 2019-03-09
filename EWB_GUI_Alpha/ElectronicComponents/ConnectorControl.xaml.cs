@@ -42,8 +42,11 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         }
         public UpdateComponentPosition OnChangeElementPosition { get; set; }
         public DeleteComponent OnDeleteComponent { get; set; }
-        private static bool isClick = false;
+
+
         private static ConnectorControl ConnectedConnectorProperty;
+        private static bool IsClick { get; set; }
+
 
         public Point CenterComponent { get { return new Point(10, 10); } }
         public Point OldPositionComponentOnCanvas { get; set; }
@@ -78,10 +81,11 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void UserControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (!isClick)
+            if (!IsClick)
             {
                 ConnectedConnectorProperty = this;
-                isClick = true;
+                IsClick = true;
+                stroke.Opacity = 0.5;
             }
             else
             {
@@ -89,7 +93,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 {
                     CustomVisualTreeHelper.KernelCanvas.Children.Add(new WireControl(ConnectedConnectorProperty, this));
                 }
-                isClick = false;
+                ConnectedConnectorProperty.stroke.Opacity = 0;
+                IsClick = false;
             }
         }
 
