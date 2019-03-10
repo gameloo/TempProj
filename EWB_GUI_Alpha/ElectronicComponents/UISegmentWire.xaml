@@ -8,7 +8,7 @@
     mc:Ignorable="d">
 
     <Canvas x:Name="container">
-        <Path Stroke="Red" StrokeThickness="3">
+        <Path Stroke="Black" StrokeThickness="3">
             <Path.Data>
                 <GeometryGroup>
                     <LineGeometry StartPoint="{x:Bind StartPoint}" EndPoint="{x:Bind EndPoint}"/>

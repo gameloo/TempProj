@@ -93,18 +93,25 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // C1 Левее
                 if (connector_1.PositionCleatOnCanvas.X < connector_2.PositionCleatOnCanvas.X)
                 {
-                    if(connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
                     {
-                        SetPositionMidleHorizontal(Segment_2);
+                        if (connector_2.PositionCleatOnCanvas.X - connector_1.PositionCleatOnCanvas.X > connector_2.PositionCleatOnCanvas.Y - connector_1.PositionCleatOnCanvas.Y)
+                            SetPositionMidleVertical(Segment_2);
+                        else
+                            SetPositionMidleHorizontal(Segment_2);
                     }
                     //  S2 on Bot
                     else
-                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement != Position.right ||
+                    if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement  == Position.left ||
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
-                        connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom
                         )
@@ -115,6 +122,9 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     // S2 on Top
                     else
                     if (
+                        connector_1.PositionOnElement == Position.center ||
+                        connector_2.PositionOnElement == Position.center ||
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.right ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.right ||
@@ -146,6 +156,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 {
                     //  Правый крюк
                     if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.right ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.bottom ||
@@ -175,19 +187,26 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // С1 Правее
                 else
                 {
-                    if(connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
                     {
-                        SetPositionMidleHorizontal(Segment_2);
+                        if (connector_1.PositionCleatOnCanvas.X - connector_2.PositionCleatOnCanvas.X > connector_2.PositionCleatOnCanvas.Y - connector_1.PositionCleatOnCanvas.Y)
+                            SetPositionMidleVertical(Segment_2);
+                        else
+                            SetPositionMidleHorizontal(Segment_2);
                     }
                     //  S2 on Bot
                     else
-                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement != Position.left ||
+                    if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.top ||
-                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.right
                         )
                     {
@@ -197,6 +216,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     // S2 on Top
                     else
                     if (
+                        connector_1.PositionOnElement == Position.center ||
+                        connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.left ||
@@ -225,7 +246,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
                 }
             }
-            // C1 и C2 на одном уровне
+            // C1 и C2 на одном уровне (Y)
             else if (connector_1.PositionCleatOnCanvas.Y == connector_2.PositionCleatOnCanvas.Y)
             {
                 // C1 Левее
@@ -233,6 +254,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 {
                     //  Bot
                     if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.right ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.right ||
@@ -261,6 +284,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 {
                     //  Bot
                     if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.right ||
@@ -311,10 +336,24 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // C1 Левее
                 if (connector_1.PositionCleatOnCanvas.X < connector_2.PositionCleatOnCanvas.X)
                 {
-                    if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
+
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    {
+                        if (connector_2.PositionCleatOnCanvas.X - connector_1.PositionCleatOnCanvas.X > connector_1.PositionCleatOnCanvas.Y - connector_2.PositionCleatOnCanvas.Y)
+                            SetPositionMidleVertical(Segment_2);
+                        else
+                            SetPositionMidleHorizontal(Segment_2);
+                    } // tyta
+                    else
+                    if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.right
                         )
@@ -325,6 +364,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     // S2 on Top
                     else
                     if (
+                        connector_1.PositionOnElement == Position.center ||
+                        connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.top ||
@@ -352,11 +393,13 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                         SetPositionMidleHorizontal(Segment_2);
                     }
                 }
-                // C1 и C2 на одном уровне
+                // C1 и C2 на одном уровне (oX)
                 else if (connector_1.PositionCleatOnCanvas.X == connector_2.PositionCleatOnCanvas.X)
                 {
                     //  Правый крюк
                     if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.top ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.top ||
@@ -386,12 +429,25 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 // С1 Правее
                 else
                 {
-                    if (connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
-                        connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.bottom ||
+                    if (connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.center)
+                    {
+                        if (connector_1.PositionCleatOnCanvas.X - connector_2.PositionCleatOnCanvas.X > connector_1.PositionCleatOnCanvas.Y - connector_2.PositionCleatOnCanvas.Y)
+                            SetPositionMidleVertical(Segment_2);
+                        else
+                            SetPositionMidleHorizontal(Segment_2);
+                    } // tyta
+                    else
+                    if (
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.center && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.bottom ||
+                        connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.left ||
                         connector_1.PositionOnElement == Position.bottom && connector_2.PositionOnElement == Position.right ||
+                        connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.bottom ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.left ||
+                        connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.left && connector_2.PositionOnElement == Position.right
                         )
                     {
@@ -401,6 +457,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                     // S2 on Top
                     else
                     if (
+                        connector_1.PositionOnElement == Position.center ||
+                        connector_2.PositionOnElement == Position.center ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.top ||
                         connector_1.PositionOnElement == Position.top && connector_2.PositionOnElement == Position.right ||
                         connector_1.PositionOnElement == Position.right && connector_2.PositionOnElement == Position.top ||
