@@ -10,7 +10,7 @@
 
     <Canvas>
         <local:UISegmentWire x:Name="Segment_1" StartPoint="{x:Bind connector_1.PositionCleatOnCanvas}" EndPoint="{Binding ElementName=Segment_2, Path=StartPoint, Mode=OneWay}"/>
-        <local:UISegmentWire x:Name="Segment_2"/>
+        <local:UISegmentWire x:Name="Segment_2" ManipulationMode="TranslateX,TranslateY"/>
         <local:UISegmentWire x:Name="Segment_3" StartPoint="{Binding ElementName=Segment_2, Path=EndPoint, Mode=OneWay}" EndPoint="{x:Bind connector_2.PositionCleatOnCanvas}"/>
     </Canvas>
 </UserControl>

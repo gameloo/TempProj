@@ -56,7 +56,18 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             Segment_2.OnClickDeleteSegmentWire += DeleteElement;
             Segment_3.OnClickDeleteSegmentWire += DeleteElement;
 
+            Segment_2.UpdateComponent += UpdateBinding;
             UpdateSegmentsPosition();
+        }
+
+        private void UpdateBinding()
+        {
+            Segment_1.EndPoint = Segment_2.StartPoint;
+            Segment_3.StartPoint = Segment_2.EndPoint;
+            Segment_1.Update();
+            Segment_2.Update();
+            Segment_3.Update();
+            Bindings.Update();
         }
 
         private void Update()

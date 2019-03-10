@@ -42,6 +42,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             set { SetValue(EndPointDP, value); }
         }
 
+        public DeleteComponent OnClickDeleteSegmentWire { get; set; }
+        public UpdateComponentPosition UpdateComponent { get; set; }
 
         public UISegmentWire()
         {
@@ -53,11 +55,24 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             Bindings.Update();
         }
 
-        public DeleteComponent OnClickDeleteSegmentWire { get; set; }
         private void MenuFlyoutItem_Remove(object sender, RoutedEventArgs e)
         {
             OnClickDeleteSegmentWire();
         }
 
+        private void UserControl_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            if (StartPoint.Y == EndPoint.Y)
+            {
+                StartPoint = new Point(StartPoint.X, StartPoint.Y + e.Delta.Translation.Y);
+                EndPoint = new Point(EndPoint.X, EndPoint.Y + e.Delta.Translation.Y);
+            }
+            else
+            {
+                StartPoint = new Point(StartPoint.X + e.Delta.Translation.X, StartPoint.Y);
+                EndPoint = new Point(EndPoint.X + e.Delta.Translation.X, EndPoint.Y);
+            }
+            UpdateComponent();
+        }
     }
 }
