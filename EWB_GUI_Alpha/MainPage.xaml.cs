@@ -40,7 +40,10 @@ namespace EWB_GUI_Alpha
 
         private void AddResistor(object sender, RoutedEventArgs e)
         {
-            cWorkSpace.Children.Add(new ResistorControl());
+            var tempResistor = new ResistorControl();
+            cWorkSpace.Children.Add(tempResistor);
+            Canvas.SetLeft(tempResistor, CursorPosition.X);
+            Canvas.SetTop(tempResistor, CursorPosition.Y);
             repeatElementType = typeof(ResistorControl);
         }
 
@@ -48,9 +51,15 @@ namespace EWB_GUI_Alpha
         {
             if (repeatElementType != null)
             {
+                UIElement tempUIElement;
                 if (repeatElementType.Equals(typeof(ResistorControl)))
-                    cWorkSpace.Children.Add(new ResistorControl());
+                {
+                    tempUIElement = new ResistorControl();
+                }
                 else throw new Exception();
+                cWorkSpace.Children.Add(tempUIElement);
+                Canvas.SetLeft(tempUIElement, CursorPosition.X);
+                Canvas.SetTop(tempUIElement, CursorPosition.Y);
             }
         }
 
