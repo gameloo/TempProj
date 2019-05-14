@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EWB_GUI_Alpha.ElectronicComponents.PropertiesOfComponents.Passive.Resistor;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -23,7 +24,9 @@ namespace EWB_GUI_Alpha.ElectronicComponents
     {
         private Point PositionConnector_1 { get; set; } = new Point(-10, 50);
         private Point PositionConnector_2 { get; set; } = new Point(110, 50);
-        private Point PositionResistanceIndicator { get; set; } = new Point(50, 20);
+
+        private Point PositionResistanceIndicator { get; set; } = new Point(40, 82);
+        private Point PositionTbName { get; set; } = new Point(45, 10);
 
         public Point CenterComponent
         {
@@ -32,23 +35,38 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         public Point OldPositionComponentOnCanvas { get; set; }
 
         public double Angle { get; set; }
-        public double ResistanceValue { get; set; }
+
+        public double ResistanceValue { get; set; } = 100;
+        public string ComponentName { get; set; } = "R";
 
         public ResistorControl()
         {
             this.InitializeComponent();
+            connector_1.OnConnect += HideConnector_1;
+            connector_2.OnConnect += HideConnector_2;
+        }
+
+        private void HideConnector_1()
+        {
+            connector_1.Visibility = Visibility.Collapsed;
+        }
+
+        private void HideConnector_2()
+        {
+            connector_2.Visibility = Visibility.Collapsed;
         }
 
         public void RotateComponent(object sender, RoutedEventArgs e)
         {
             if (Angle == 0)
             {
-                Angle = 90;
+                Angle = -90;
                 PositionConnector_1 = new Point(50, -10);
                 connector_1.PositionOnElement = Position.top;
                 PositionConnector_2 = new Point(50, 110);
                 connector_2.PositionOnElement = Position.bottom;
-                PositionResistanceIndicator = new Point(90, 50);
+                PositionResistanceIndicator = new Point(8, 80);
+                PositionTbName = new Point(85, 20);
             }
             else
             {
@@ -57,9 +75,11 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 connector_1.PositionOnElement = Position.left;
                 PositionConnector_2 = new Point(110, 50);
                 connector_2.PositionOnElement = Position.right;
-                PositionResistanceIndicator = new Point(50, 20);
-            }
-            Bindings.Update();
+                PositionResistanceIndicator = new Point(40, 82);
+                PositionTbName = new Point(45, 10);
+
+    }
+    Bindings.Update();
             ChildrenPositionUpdate();
         }
 
@@ -74,6 +94,13 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         {
             connector_1.ChildrenPositionUpdate();
             connector_2.ChildrenPositionUpdate();
+        }
+
+        private async void OpenProperties(object sender, RoutedEventArgs e)
+        {
+            var dialog = new PropertiesOfResistorContentDialog(this);
+            var result = await dialog.ShowAsync();
+            Bindings.Update();
         }
     }
 }

@@ -15,11 +15,13 @@
             <Canvas Name="cWorkSpace" Background="White" Height="2400" Width="2400">
                 <Canvas.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutSubItem Text="Добавть элемент">
-                            <MenuFlyoutItem Text="Резистор" Click="AddResistor"/>
-                            <MenuFlyoutItem Text="Конденсатор"/>
-                            <MenuFlyoutItem Text="Катушка индкутивности"/>
-                            <MenuFlyoutItem Text="Источник ЭДС"/>
+                        <MenuFlyoutSubItem Text="Пассивные компоненты">
+                            <MenuFlyoutItem Text="Добавить резистор" Click="AddResistor"/>
+                            <MenuFlyoutItem Text="Добавить конденсатор" Click="AddCapacitor"/>
+                            <MenuFlyoutItem Text="Добавить катушку индкутивности" Click="AddInductor"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="Источники">
+                            <MenuFlyoutItem Text="Добавить источник тока" Click="MenuFlyoutItem_Click"/>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Добавить узел" Click="AddNewConnector"/>
@@ -32,12 +34,14 @@
 
     <Page.BottomAppBar>
         <CommandBar Name="CommandBar">
-            <AppBarButton Label="Сохранить как" Icon="Save"/>
-            <AppBarButton Label="Открыть" Icon="OpenFile"/>
+            <AppBarButton Label="Сохранить как" Icon="Save" Click="AppBarButton_SaveAs"/>
+            <AppBarButton Label="Открыть" Icon="OpenFile" Click="AppBarButton_Open"/>
             <AppBarSeparator/>
             <AppBarButton Label="Настройки" Icon="Setting"/>
             <AppBarSeparator/>
-            <AppBarButton Label="Play" Icon="Play"/>
+            <AppBarButton Name="PlayBtn" Label="Пуск" Icon="Play" Click="AppBarButton_Play"/>
+            <AppBarButton Name="StopBtn" Label="Стоп" Visibility="Collapsed" Icon="Stop" Click="StopBtn_Click"/>
+            <AppBarButton Name="PauseBtn" Label="Пауза" Icon="Pause" IsEnabled="False" Click="AppBarButton_Pause"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

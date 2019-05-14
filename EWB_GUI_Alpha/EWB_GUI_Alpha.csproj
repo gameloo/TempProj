@@ -108,6 +108,9 @@
     <Compile Include="ElectronicComponents\InductorControl.xaml.cs">
       <DependentUpon>InductorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ElectronicComponents\PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml.cs">
+      <DependentUpon>PropertiesOfResistorContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ElectronicComponents\ResistorControl.xaml.cs">
       <DependentUpon>ResistorControl.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ElectronicComponents\PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ElectronicComponents\ResistorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,7 +199,11 @@
       <Version>2.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\" />
+    <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Capacitor\" />
+    <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Inductor\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

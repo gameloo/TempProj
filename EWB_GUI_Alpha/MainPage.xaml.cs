@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -47,6 +48,33 @@ namespace EWB_GUI_Alpha
             repeatElementType = typeof(ResistorControl);
         }
 
+        private void AddCapacitor(object sender, RoutedEventArgs e)
+        {
+            var control = new CapacitorControl();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(CapacitorControl);
+        }
+
+        private void AddInductor(object sender, RoutedEventArgs e)
+        {
+            var control = new InductorControl();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(InductorControl);
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var control = new EMFsourceControl();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(EMFsourceControl);
+        }
+
         private void RepeatAddingLastElement(object sender, RoutedEventArgs e)
         {
             if (repeatElementType != null)
@@ -72,5 +100,53 @@ namespace EWB_GUI_Alpha
             Canvas.SetTop(tempConnector, CursorPosition.Y);
 
         }
+
+        private void AppBarButton_Play(object sender, RoutedEventArgs e)
+        {
+            StopBtn.Visibility = Visibility.Visible;
+            PlayBtn.Visibility = Visibility.Collapsed;
+
+            PauseBtn.IsEnabled = true;
+        }
+
+
+        private void AppBarButton_Pause(object sender, RoutedEventArgs e)
+        {
+            PlayBtn.Visibility = Visibility.Visible;
+            StopBtn.Visibility = Visibility.Collapsed;
+            PauseBtn.IsEnabled = false;           
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PlayBtn.Visibility = Visibility.Visible;
+            StopBtn.Visibility = Visibility.Collapsed;
+            PauseBtn.IsEnabled = false;
+        }
+
+        private async void AppBarButton_SaveAs(object sender, RoutedEventArgs e)
+        {
+            var savePicker = new FileSavePicker();
+            // место для сохранения по умолчанию
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            // устанавливаем типы файлов для сохранения
+            savePicker.FileTypeChoices.Add("", new List<string>() { ".shm" });
+            // устанавливаем имя нового файла по умолчанию
+            savePicker.SuggestedFileName = "New snheme";
+            savePicker.CommitButtonText = "Сохранить";
+            var new_file = await savePicker.PickSaveFileAsync();
+        }
+
+        private async void AppBarButton_Open(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.Thumbnail;
+            openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+            openPicker.CommitButtonText = "Открыть";
+            openPicker.FileTypeFilter.Add(".shm");
+            var file = await openPicker.PickSingleFileAsync();
+        }
+
+       
     }
 }

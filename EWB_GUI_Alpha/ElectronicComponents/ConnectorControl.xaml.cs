@@ -27,6 +27,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         center
     }
 
+    public delegate void OnConnect();
 
     public sealed partial class ConnectorControl : UserControl, IEComponent
     {
@@ -54,6 +55,13 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         public void RotateComponent(object sender, RoutedEventArgs e) { }
         public void ChildrenPositionUpdate() { OnChangeElementPosition?.Invoke(); }
+
+        //
+
+        public OnConnect OnConnect { get; set; }
+
+
+        
 
         public Point PositionCleatOnCanvas
         {
@@ -92,6 +100,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 if (!ConnectedConnectorProperty.Equals(this))
                 {
                     CustomVisualTreeHelper.KernelCanvas.Children.Add(new WireControl(ConnectedConnectorProperty, this));
+                    ConnectedConnectorProperty.OnConnect?.Invoke();
+                    OnConnect?.Invoke();
                 }
                 ConnectedConnectorProperty.stroke.Opacity = 0;
                 IsClick = false;

@@ -6,20 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="100"
-    d:DesignWidth="100">
+    d:DesignHeight="120"
+    d:DesignWidth="120"
+    AllowDrop="True"
+    ManipulationStarted="UserControl_ManipulationStarted"
+    ManipulationDelta="UserControl_ManipulationDelta"
+    ManipulationCompleted="UserControl_ManipulationCompleted"
+    ManipulationMode="TranslateX, TranslateY"
+    Canvas.ZIndex="3">
 
-    <Path Stroke="Black">
-        <Path.Data>
-            <GeometryGroup FillRule="EvenOdd">
-                <LineGeometry StartPoint="50,20" EndPoint="50,0"/>
-                <LineGeometry StartPoint="50,80" EndPoint="50,100"/>
-                <EllipseGeometry Center="50,50" RadiusX="30" RadiusY="30"/>
-                
-                <LineGeometry StartPoint="50,70" EndPoint="50,30"/>
-                <LineGeometry StartPoint="40,40" EndPoint="50,30"/>
-                <LineGeometry StartPoint="60,40" EndPoint="50,30"/>
-            </GeometryGroup>
-        </Path.Data>
-    </Path>
+    <Canvas Background="White" Width="120" Height="120">
+        <Path Stroke="Black" StrokeThickness="3">
+            <Path.Data>
+                <GeometryGroup FillRule="EvenOdd">
+                    <LineGeometry StartPoint="0,60" EndPoint="25,60"/>
+                    <LineGeometry StartPoint="95,60" EndPoint="120,60"/>
+                    <EllipseGeometry Center="60,60" RadiusX="35" RadiusY="35"/>
+
+                    <LineGeometry StartPoint="40,60" EndPoint="80,60"/>
+                    <LineGeometry StartPoint="70,50" EndPoint="80,60"/>
+                    <LineGeometry StartPoint="70,70" EndPoint="80,60"/>
+                </GeometryGroup>
+            </Path.Data>
+            <Path.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="60" CenterY="60"/>
+            </Path.RenderTransform>
+        </Path>
+        <local:ConnectorControl x:Name="connector_1"
+                                ManipulationMode="None"
+                                PositionOnElement="left"
+                                Canvas.Left="{x:Bind PositionConnector_1.X}"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"/>
+        <local:ConnectorControl x:Name="connector_2"
+                                ManipulationMode="None"
+                                PositionOnElement="right"
+                                Canvas.Left="{x:Bind PositionConnector_2.X}"
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
+
+        <Canvas.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Повернуть по часовой стрелке" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Повернуть против часовой стрелки" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Копировать"/>
+                <MenuFlyoutItem Text="Свойства"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
+            </MenuFlyout>
+        </Canvas.ContextFlyout>
+    </Canvas>
 </UserControl>

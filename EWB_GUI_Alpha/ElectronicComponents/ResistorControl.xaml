@@ -40,16 +40,26 @@
                                 Canvas.Left="{x:Bind PositionConnector_2.X}"
                                 Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
 
-        <StackPanel Name="spResistanceIndicator" Orientation="Horizontal" Canvas.Left="{x:Bind PositionResistanceIndicator.X}" Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
-            <TextBlock Text="R: "/>
-            <TextBlock Text="{x:Bind ResistanceValue}"/>
-        </StackPanel>
 
+        <TextBlock Text="{x:Bind ResistanceValue}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionResistanceIndicator.X}"
+                   Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
+            <TextBlock.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="0" CenterY="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <TextBlock Text="{x:Bind ComponentName}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionTbName.X}"
+                   Canvas.Top="{x:Bind PositionTbName.Y}"/>
+        
         <Canvas.ContextFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
                 <MenuFlyoutItem Text="Копировать"/>
-                <MenuFlyoutItem Text="Свойства"/>
+                <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
             </MenuFlyout>

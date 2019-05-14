@@ -6,28 +6,46 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="100"
-    d:DesignWidth="100">
+    d:DesignHeight="120"
+    d:DesignWidth="120"
+    AllowDrop="True"
+    ManipulationStarted="UserControl_ManipulationStarted"
+    ManipulationDelta="UserControl_ManipulationDelta"
+    ManipulationCompleted="UserControl_ManipulationCompleted"
+    ManipulationMode="TranslateX, TranslateY"
+    Canvas.ZIndex="3">
 
-    <Path Stroke="Black">
-        <Path.Data>
-            <PathGeometry>
-                <PathFigure StartPoint="0,50">
-                    <LineSegment Point="20,50"/>
-                </PathFigure>
-                <PathFigure StartPoint="80,50">
-                    <LineSegment Point="100,50"/>
-                </PathFigure>
-                <PathFigure StartPoint="40,50">
-                    <ArcSegment Point="20,50" Size="25,100"/>
-                </PathFigure>
-                <PathFigure StartPoint="60,50">
-                    <ArcSegment Point="40,50" Size="25,100"/>
-                </PathFigure>
-                <PathFigure StartPoint="80,50">
-                    <ArcSegment Point="60,50" Size="25,100"/>
-                </PathFigure>
-            </PathGeometry>
-        </Path.Data>
-    </Path>
+    <Canvas Background="White" Width="120" Height="120">
+        <Path Stroke="Black" StrokeThickness="3">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="10,60">
+                        <LineSegment Point="30,60"/>
+                    </PathFigure>
+                    <PathFigure StartPoint="90,60">
+                        <LineSegment Point="110,60"/>
+                    </PathFigure>
+                    <PathFigure StartPoint="50,60">
+                        <ArcSegment Point="30,60" Size="25,100"/>
+                    </PathFigure>
+                    <PathFigure StartPoint="70,60">
+                        <ArcSegment Point="50,60" Size="25,100"/>
+                    </PathFigure>
+                    <PathFigure StartPoint="90,60">
+                        <ArcSegment Point="70,60" Size="25,100"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <local:ConnectorControl x:Name="connector_1"
+                                ManipulationMode="None"
+                                PositionOnElement="left"
+                                Canvas.Left="0"
+                                Canvas.Top="50"/>
+        <local:ConnectorControl x:Name="connector_2"
+                                ManipulationMode="None"
+                                PositionOnElement="right"
+                                Canvas.Left="100"
+                                Canvas.Top="50"/>
+    </Canvas>
 </UserControl>
