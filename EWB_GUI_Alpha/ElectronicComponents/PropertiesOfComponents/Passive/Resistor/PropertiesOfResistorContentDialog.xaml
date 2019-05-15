@@ -17,7 +17,7 @@
             <TextBlock Text="Сопротивление" Margin="5,5,5,0"/>
             <RelativePanel Margin="5">
                 <TextBox Name="tbResistace" Width="180" RelativePanel.AlignLeftWithPanel="True"/>
-                <ComboBox HorizontalAlignment="Right" SelectedValue="0" RelativePanel.RightOf="tbResistace" RelativePanel.AlignRightWithPanel="True">
+                <ComboBox Name="cbMultipler" HorizontalAlignment="Right" SelectedValue="1" RelativePanel.RightOf="tbResistace" RelativePanel.AlignRightWithPanel="True">
                     <x:String>Ом</x:String>
                     <x:String>кОм</x:String>
                     <x:String>МОм</x:String>

@@ -19,11 +19,11 @@
         <Path Stroke="Black" StrokeThickness="3">
             <Path.Data>
                 <PathGeometry>
-                    <PathFigure StartPoint="10,60">
+                    <PathFigure StartPoint="0,60">
                         <LineSegment Point="30,60"/>
                     </PathFigure>
                     <PathFigure StartPoint="90,60">
-                        <LineSegment Point="110,60"/>
+                        <LineSegment Point="120,60"/>
                     </PathFigure>
                     <PathFigure StartPoint="50,60">
                         <ArcSegment Point="30,60" Size="25,100"/>
@@ -36,16 +36,46 @@
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
+            <Path.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="60" CenterY="60"/>
+            </Path.RenderTransform>
         </Path>
+
+        <TextBlock Text="{x:Bind InductionValue}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionInductionIndicator.X}"
+                   Canvas.Top="{x:Bind PositionInductionIndicator.Y}">
+            <TextBlock.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="0" CenterY="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <TextBlock Text="{x:Bind ComponentName}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionTbName.X}"
+                   Canvas.Top="{x:Bind PositionTbName.Y}"/>
+
+
         <local:ConnectorControl x:Name="connector_1"
                                 ManipulationMode="None"
                                 PositionOnElement="left"
-                                Canvas.Left="0"
-                                Canvas.Top="50"/>
+                                Canvas.Left="{x:Bind PositionConnector_1.X}"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"/>
         <local:ConnectorControl x:Name="connector_2"
                                 ManipulationMode="None"
                                 PositionOnElement="right"
-                                Canvas.Left="100"
-                                Canvas.Top="50"/>
+                                Canvas.Left="{x:Bind PositionConnector_2.X}"
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
+
+
+        <Canvas.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Копировать"/>
+                <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
+            </MenuFlyout>
+        </Canvas.ContextFlyout>
     </Canvas>
 </UserControl>

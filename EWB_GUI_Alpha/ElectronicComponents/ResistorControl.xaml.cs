@@ -36,7 +36,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         public double Angle { get; set; }
 
-        public double ResistanceValue { get; set; } = 100;
+        public string ResistanceValue { get; set; } = "100";
         public string ComponentName { get; set; } = "R";
 
         public ResistorControl()
@@ -92,8 +92,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 PositionResistanceIndicator = new Point(40, 82);
                 PositionTbName = new Point(45, 10);
 
-    }
-    Bindings.Update();
+            }
+            Bindings.Update();
             ChildrenPositionUpdate();
         }
 

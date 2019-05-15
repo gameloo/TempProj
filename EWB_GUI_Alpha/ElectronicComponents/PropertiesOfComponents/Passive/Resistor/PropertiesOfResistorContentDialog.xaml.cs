@@ -31,7 +31,15 @@ namespace EWB_GUI_Alpha.ElectronicComponents.PropertiesOfComponents.Passive.Resi
         {
             if (Double.TryParse(tbResistace.Text, out double result))
             {
-                resistor.ResistanceValue = result;
+                if (cbMultipler.SelectedValue.ToString() == "кОм") result *= 1000;
+                if (cbMultipler.SelectedValue.ToString() == "MОм") result *= 1000000;
+                var strResult = result.ToString();
+                if (result > 1000)
+                {
+                    strResult = $"{(result - result % 1000)/1000}K{result % 1000}";
+                }
+
+                resistor.ResistanceValue = strResult;
                 resistor.ComponentName = tbNameCompont.Text;
             }
             else args.Cancel = true;

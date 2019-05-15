@@ -19,22 +19,49 @@
         <Path Stroke="Black" StrokeThickness="3">
             <Path.Data>
                 <GeometryGroup FillRule="EvenOdd">
-                    <LineGeometry StartPoint="10,60" EndPoint="50,60"/>
-                    <LineGeometry StartPoint="50,90" EndPoint="50,30"/>
-                    <LineGeometry StartPoint="70,90" EndPoint="70,30"/>
-                    <LineGeometry StartPoint="70,60" EndPoint="110,60"/>
+                    <LineGeometry StartPoint="0,60" EndPoint="50,60"/>
+                    <LineGeometry StartPoint="70,60" EndPoint="120,60"/>
+                    <LineGeometry StartPoint="50,30" EndPoint="50,90"/>
+                    <LineGeometry StartPoint="70,30" EndPoint="70,90"/>
                 </GeometryGroup>
             </Path.Data>
+            <Path.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="60" CenterY="60"/>
+            </Path.RenderTransform>
         </Path>
         <local:ConnectorControl x:Name="connector_1"
                                 ManipulationMode="None"
                                 PositionOnElement="left"
-                                Canvas.Left="0"
-                                Canvas.Top="50"/>
+                                Canvas.Left="{x:Bind PositionConnector_1.X}"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"/>
         <local:ConnectorControl x:Name="connector_2"
                                 ManipulationMode="None"
                                 PositionOnElement="right"
-                                Canvas.Left="100"
-                                Canvas.Top="50"/>
+                                Canvas.Left="{x:Bind PositionConnector_2.X}"
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
+
+        <TextBlock Text="{x:Bind ResistanceValue}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionResistanceIndicator.X}"
+                   Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">
+            <TextBlock.RenderTransform>
+                <RotateTransform Angle="{x:Bind Angle}" x:DefaultBindMode="OneWay" CenterX="0" CenterY="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <TextBlock Text="{x:Bind ComponentName}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionTbName.X}"
+                   Canvas.Top="{x:Bind PositionTbName.Y}"/>
+
+        <Canvas.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Копировать"/>
+                <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
+            </MenuFlyout>
+        </Canvas.ContextFlyout>
     </Canvas>
 </UserControl>

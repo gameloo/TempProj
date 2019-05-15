@@ -54,7 +54,6 @@
                    FontSize="24"
                    Canvas.Left="{x:Bind PositionTbName.X}"
                    Canvas.Top="{x:Bind PositionTbName.Y}"/>
-        
         <Canvas.ContextFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>

@@ -19,6 +19,14 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 {
     public sealed partial class CapacitorControl : UserControl, IEComponent
     {
+        private Point PositionConnector_1 { get; set; } = new Point(-10, 50);
+        private Point PositionConnector_2 { get; set; } = new Point(110, 50);
+        private Point PositionTbName { get; set; } = new Point(45, 0);
+        private Point PositionResistanceIndicator { get; set; } = new Point(40, 90);
+        public double Angle { get; set; }
+        public string ResistanceValue { get; set; } = "100";
+        public string ComponentName { get; set; } = "C";
+
         public CapacitorControl()
         {
             this.InitializeComponent();
@@ -50,7 +58,43 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         public void RotateComponent(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (Angle == 0)
+            {
+                Angle = -90;
+                PositionConnector_1 = new Point(50, -10);
+                connector_1.PositionOnElement = Position.top;
+                PositionConnector_2 = new Point(50, 110);
+                connector_2.PositionOnElement = Position.bottom;
+                PositionTbName = new Point(90, 20);
+                PositionResistanceIndicator = new Point(0, 80);
+            }
+            else
+            {
+                Angle = 0;
+                PositionConnector_1 = new Point(-10, 50);
+                connector_1.PositionOnElement = Position.left;
+                PositionConnector_2 = new Point(110, 50);
+                connector_2.PositionOnElement = Position.right;
+                PositionTbName = new Point(45, 0);
+                PositionResistanceIndicator = new Point(40, 90);
+
+            }
+            Bindings.Update();
+            ChildrenPositionUpdate();
+        }
+
+        private async void OpenProperties(object sender, RoutedEventArgs e)
+        {
+            //var dialog = new PropertiesOfResistorContentDialog(this);
+            //var result = await dialog.ShowAsync();
+            //Bindings.Update();
+        }
+
+        private void DeleteElement(object sender, RoutedEventArgs e)
+        {
+            connector_1.OnDeleteComponent?.Invoke();
+            connector_2.OnDeleteComponent?.Invoke();
+            CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
     }
 }
