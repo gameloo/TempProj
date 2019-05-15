@@ -42,8 +42,11 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         public ResistorControl()
         {
             this.InitializeComponent();
-            connector_1.OnConnect += HideConnector_1;
-            connector_2.OnConnect += HideConnector_2;
+            connector_1.OnConnectWire += HideConnector_1;
+            connector_2.OnConnectWire += HideConnector_2;
+
+            connector_1.OnDisconnectWire += ShowConnector_1;
+            connector_2.OnDisconnectWire += ShowConnector_2;
         }
 
         private void HideConnector_1()
@@ -55,6 +58,17 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         {
             connector_2.Visibility = Visibility.Collapsed;
         }
+
+        private void ShowConnector_1()
+        {
+            connector_1.Visibility = Visibility.Visible;
+        }
+
+        private void ShowConnector_2()
+        {
+            connector_2.Visibility = Visibility.Visible;
+        }
+
 
         public void RotateComponent(object sender, RoutedEventArgs e)
         {

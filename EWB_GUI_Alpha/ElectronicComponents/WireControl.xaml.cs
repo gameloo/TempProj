@@ -506,6 +506,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         private void DeleteElement()
         {
+            connector_1.OnDisconnectWire?.Invoke();
+            connector_2.OnDisconnectWire?.Invoke();
             CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
     }

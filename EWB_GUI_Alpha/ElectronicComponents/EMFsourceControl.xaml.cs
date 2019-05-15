@@ -26,8 +26,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         public EMFsourceControl()
         {
             this.InitializeComponent();
-            connector_1.OnConnect += HideConnector_1;
-            connector_2.OnConnect += HideConnector_2;
+            connector_1.OnConnectWire += HideConnector_1;
+            connector_2.OnConnectWire += HideConnector_2;
         }
 
         private void HideConnector_1()

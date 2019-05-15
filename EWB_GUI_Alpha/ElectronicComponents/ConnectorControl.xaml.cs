@@ -58,7 +58,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
 
         //
 
-        public OnConnect OnConnect { get; set; }
+        public OnConnect OnConnectWire { get; set; }
+        public OnConnect OnDisconnectWire { get; set; }
 
 
         
@@ -100,8 +101,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
                 if (!ConnectedConnectorProperty.Equals(this))
                 {
                     CustomVisualTreeHelper.KernelCanvas.Children.Add(new WireControl(ConnectedConnectorProperty, this));
-                    ConnectedConnectorProperty.OnConnect?.Invoke();
-                    OnConnect?.Invoke();
+                    ConnectedConnectorProperty.OnConnectWire?.Invoke();
+                    OnConnectWire?.Invoke();
                 }
                 ConnectedConnectorProperty.stroke.Opacity = 0;
                 IsClick = false;
