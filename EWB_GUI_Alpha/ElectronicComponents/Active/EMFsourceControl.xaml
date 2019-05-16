@@ -62,7 +62,7 @@
                 <MenuFlyoutItem Text="Повернуть на 90&#x00B0;&#x21BB;" Click="Rotate90Clockwice"/>
                 <MenuFlyoutItem Text="Повернуть на 90&#x00B0;&#x21BA;" Click="Rotate90Counterclockwice"/>
                 <MenuFlyoutItem Text="Копировать"/>
-                <MenuFlyoutItem Text="Свойства"/>
+                <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
             </MenuFlyout>

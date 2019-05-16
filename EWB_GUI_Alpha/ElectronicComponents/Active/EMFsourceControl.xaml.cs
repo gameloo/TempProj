@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EWB_GUI_Alpha.ElectronicComponents.PropertiesOfComponents.Active.CurrentSource;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,8 +26,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         private Point PositionIndicator { get; set; } = new Point(40, 90);
         public double Angle { get; set; }
         public double AngleIndicator { get; set; }
-        public string IndicatorValue { get; set; } = "10V\u007E";
-        public string ComponentName { get; set; } = "E";
+        public string IndicatorValue { get; set; } = "1А";
+        public string ComponentName { get; set; } = "I";
 
         public EMFsourceControl()
         {
@@ -135,6 +136,13 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             }
             Bindings.Update();
             ChildrenPositionUpdate();
+        }
+
+        private async void OpenProperties(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CurrentSourceProperties(this);
+            var result = await dialog.ShowAsync();
+            Bindings.Update();
         }
     }
 }

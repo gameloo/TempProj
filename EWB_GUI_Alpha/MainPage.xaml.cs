@@ -1,4 +1,5 @@
 ﻿using EWB_GUI_Alpha.ElectronicComponents;
+using EWB_GUI_Alpha.ElectronicComponents.Active;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,32 +40,6 @@ namespace EWB_GUI_Alpha
         }
 
 
-        private void AddResistor(object sender, RoutedEventArgs e)
-        {
-            var tempResistor = new ResistorControl();
-            cWorkSpace.Children.Add(tempResistor);
-            Canvas.SetLeft(tempResistor, CursorPosition.X);
-            Canvas.SetTop(tempResistor, CursorPosition.Y);
-            repeatElementType = typeof(ResistorControl);
-        }
-
-        private void AddCapacitor(object sender, RoutedEventArgs e)
-        {
-            var control = new CapacitorControl();
-            cWorkSpace.Children.Add(control);
-            Canvas.SetLeft(control, CursorPosition.X);
-            Canvas.SetTop(control, CursorPosition.Y);
-            repeatElementType = typeof(CapacitorControl);
-        }
-
-        private void AddInductor(object sender, RoutedEventArgs e)
-        {
-            var control = new InductorControl();
-            cWorkSpace.Children.Add(control);
-            Canvas.SetLeft(control, CursorPosition.X);
-            Canvas.SetTop(control, CursorPosition.Y);
-            repeatElementType = typeof(InductorControl);
-        }
 
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
@@ -91,15 +66,6 @@ namespace EWB_GUI_Alpha
             }
         }
 
-        private void AddNewConnector(object sender, RoutedEventArgs e)
-        {
-            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center, ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY };
-            cWorkSpace.Children.Add(tempConnector);
-            tempConnector.AddMenuFlyout();
-            Canvas.SetLeft(tempConnector, CursorPosition.X);
-            Canvas.SetTop(tempConnector, CursorPosition.Y);
-
-        }
 
         private void AppBarButton_Play(object sender, RoutedEventArgs e)
         {
@@ -147,6 +113,60 @@ namespace EWB_GUI_Alpha
             var file = await openPicker.PickSingleFileAsync();
         }
 
-       
+        private void AddVoltageCurrentSource(object sender, RoutedEventArgs e)
+        {
+            var control = new UCVoltageCurrentSource();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(UCVoltageCurrentSource);
+        }
+
+        private void AddAmpermetr(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddVoltmeter(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddNewConnector(object sender, RoutedEventArgs e)
+        {
+            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center, ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY };
+            cWorkSpace.Children.Add(tempConnector);
+            tempConnector.AddMenuFlyout();
+            Canvas.SetLeft(tempConnector, CursorPosition.X);
+            Canvas.SetTop(tempConnector, CursorPosition.Y);
+
+        }
+
+        private void AddResistor(object sender, RoutedEventArgs e)
+        {
+            var tempResistor = new ResistorControl();
+            cWorkSpace.Children.Add(tempResistor);
+            Canvas.SetLeft(tempResistor, CursorPosition.X);
+            Canvas.SetTop(tempResistor, CursorPosition.Y);
+            repeatElementType = typeof(ResistorControl);
+        }
+
+        private void AddCapacitor(object sender, RoutedEventArgs e)
+        {
+            var control = new CapacitorControl();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(CapacitorControl);
+        }
+
+        private void AddInductor(object sender, RoutedEventArgs e)
+        {
+            var control = new InductorControl();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(InductorControl);
+        }
     }
 }

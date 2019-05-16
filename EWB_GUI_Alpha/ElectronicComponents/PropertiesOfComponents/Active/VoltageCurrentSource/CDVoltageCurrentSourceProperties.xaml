@@ -1,0 +1,46 @@
+﻿<ContentDialog
+    x:Class="EWB_GUI_Alpha.ElectronicComponents.PropertiesOfComponents.Active.VoltageCurrentSource.CDVoltageCurrentSourceProperties"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EWB_GUI_Alpha.ElectronicComponents.PropertiesOfComponents.Active.VoltageCurrentSource"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+     Title="Параметры источника напряжения"
+    PrimaryButtonText="Принять"
+    SecondaryButtonText="Отмена"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="{x:Bind H1Text}" Margin="5,5,5,0"/>
+            <RelativePanel Margin="5">
+                <TextBox Name="tbVoltage" Width="240" RelativePanel.AlignLeftWithPanel="True"/>
+                <ComboBox Name="cbMultipler" Width="70"
+                          ItemsSource="{x:Bind VoltageMultipler}"
+                          SelectedItem="{x:Bind VoltageMultipler[2]}"
+                          HorizontalAlignment="Right"
+                          RelativePanel.RightOf="tbVoltage" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+            <RelativePanel>
+                <TextBlock Name="tbH2" Text="Форма тока" Margin="5,5,20,0"/>
+                <ComboBox Name="cbACDC"
+                          ItemsSource="{x:Bind Waveform}"
+                          SelectedItem="{x:Bind Waveform[0]}"
+                          HorizontalAlignment="Right" RelativePanel.RightOf="tbH2" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+            <RelativePanel Margin="5" Visibility="{Binding ElementName=cbACDC, Path=SelectedIndex}">
+                <TextBlock Name="tbH3" Text="Частота" Margin="5,5,5,0"/>
+                <TextBox Name="tbFrequency" Width="240" RelativePanel.Below="tbH3" RelativePanel.AlignLeftWithPanel="True"/>
+                <ComboBox Name="cbMultiplerF" Width="70"
+                          ItemsSource="{x:Bind FrequencyMultipler}"
+                          SelectedItem="{x:Bind FrequencyMultipler[0]}"
+                          HorizontalAlignment="Right" RelativePanel.RightOf="tbFrequency" RelativePanel.Below="tbH3" RelativePanel.AlignRightWithPanel="True"/>
+            </RelativePanel>
+            <TextBlock Text="Обозначение на схеме" Margin="5,10,5,0"/>
+            <TextBox Name="tbNameCompont"  Margin="5,5,5,0"/>
+
+        </StackPanel>
+    </Grid>
+</ContentDialog>

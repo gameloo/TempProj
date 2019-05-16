@@ -98,31 +98,46 @@
     <Compile Include="Delimiter.xaml.cs">
       <DependentUpon>Delimiter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\ConnectorControl.xaml.cs">
+    <Compile Include="ElectronicComponents\Active\UCVoltageCurrentSource.xaml.cs">
+      <DependentUpon>UCVoltageCurrentSource.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElectronicComponents\OtherElements\ConnectorControl.xaml.cs">
       <DependentUpon>ConnectorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\EMFsourceControl.xaml.cs">
+    <Compile Include="ElectronicComponents\Active\EMFsourceControl.xaml.cs">
       <DependentUpon>EMFsourceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ElectronicComponents\IEComponent.cs" />
-    <Compile Include="ElectronicComponents\InductorControl.xaml.cs">
+    <Compile Include="ElectronicComponents\Passive\InductorControl.xaml.cs">
       <DependentUpon>InductorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml.cs">
+      <DependentUpon>CurrentSourceProperties.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElectronicComponents\PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml.cs">
+      <DependentUpon>CDVoltageCurrentSourceProperties.xaml</DependentUpon>
     </Compile>
     <Compile Include="ElectronicComponents\PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml.cs">
       <DependentUpon>PropertiesOfResistorContentDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\ResistorControl.xaml.cs">
+    <Compile Include="ElectronicComponents\Passive\ResistorControl.xaml.cs">
       <DependentUpon>ResistorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ElectronicComponents\CustomVisualTreeHelper.cs" />
-    <Compile Include="ElectronicComponents\UISegmentWire.xaml.cs">
+    <Compile Include="ElectronicComponents\OtherElements\Wire\UISegmentWire.xaml.cs">
       <DependentUpon>UISegmentWire.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\WireControl.xaml.cs">
+    <Compile Include="ElectronicComponents\OtherElements\Wire\WireControl.xaml.cs">
       <DependentUpon>WireControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\СapacitorControl.xaml.cs">
+    <Compile Include="ElectronicComponents\Passive\СapacitorControl.xaml.cs">
       <DependentUpon>СapacitorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElectronicComponents\Tools\UCAmmeter.xaml.cs">
+      <DependentUpon>UCAmmeter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ElectronicComponents\Tools\UCVoltmeter.xaml.cs">
+      <DependentUpon>UCVoltmeter.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -154,15 +169,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ElectronicComponents\ConnectorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ElectronicComponents\EMFsourceControl.xaml">
+    <Page Include="ElectronicComponents\Active\UCVoltageCurrentSource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\InductorControl.xaml">
+    <Page Include="ElectronicComponents\OtherElements\ConnectorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ElectronicComponents\Active\EMFsourceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElectronicComponents\Passive\InductorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElectronicComponents\PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,19 +197,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\ResistorControl.xaml">
+    <Page Include="ElectronicComponents\Passive\ResistorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\UISegmentWire.xaml">
+    <Page Include="ElectronicComponents\OtherElements\Wire\UISegmentWire.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ElectronicComponents\WireControl.xaml">
+    <Page Include="ElectronicComponents\OtherElements\Wire\WireControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ElectronicComponents\СapacitorControl.xaml">
+    <Page Include="ElectronicComponents\Passive\СapacitorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElectronicComponents\Tools\UCAmmeter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ElectronicComponents\Tools\UCVoltmeter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,7 +235,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\" />
     <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Capacitor\" />
     <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Inductor\" />
   </ItemGroup>

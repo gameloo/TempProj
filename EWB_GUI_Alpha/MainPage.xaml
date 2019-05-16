@@ -22,6 +22,11 @@
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSubItem Text="Источники">
                             <MenuFlyoutItem Text="Добавить источник тока" Click="MenuFlyoutItem_Click"/>
+                            <MenuFlyoutItem Text="Добавить источник напряжения" Click="AddVoltageCurrentSource"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="Измерительное оборудование">
+                            <MenuFlyoutItem Text="Амперметр" Click="AddAmpermetr"/>
+                            <MenuFlyoutItem Text="Вольтметр" Click="AddVoltmeter"/>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
                         <MenuFlyoutItem Text="Добавить узел" Click="AddNewConnector"/>
