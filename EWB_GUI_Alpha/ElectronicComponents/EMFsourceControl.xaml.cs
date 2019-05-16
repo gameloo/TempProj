@@ -21,7 +21,12 @@ namespace EWB_GUI_Alpha.ElectronicComponents
     {
         private Point PositionConnector_1 { get; set; } = new Point(-10, 50);
         private Point PositionConnector_2 { get; set; } = new Point(110, 50);
+        private Point PositionTbName { get; set; } = new Point(45, -5);
+        private Point PositionIndicator { get; set; } = new Point(40, 90);
         public double Angle { get; set; }
+        public double AngleIndicator { get; set; }
+        public string IndicatorValue { get; set; } = "10V\u007E";
+        public string ComponentName { get; set; } = "E";
 
         public EMFsourceControl()
         {
@@ -60,25 +65,73 @@ namespace EWB_GUI_Alpha.ElectronicComponents
             CustomVisualTreeHelper.KernelCanvas.Children.Remove(this);
         }
 
-        public void RotateComponent(object sender, RoutedEventArgs e)
+
+        // Поворот на 90 градусов по часовой стрелке
+        private void Rotate90Clockwice(object sender, RoutedEventArgs e)
         {
-            if (Angle == 0)
+            Angle += Angle != 270 ? 90 : -270;
+            RotateComponent();
+        }
+
+        // Поворот на 90 градусов против часовой стрелки
+        private void Rotate90Counterclockwice(object sender, RoutedEventArgs e)
+        {
+            Angle -= Angle != 0 ? 90 : -270; 
+            RotateComponent();
+        }
+
+        private void RotateComponent()
+        {
+            switch (Angle)
             {
-                Angle = 90;
-                PositionConnector_1 = new Point(50, -10);
-                connector_1.PositionOnElement = Position.top;
-                PositionConnector_2 = new Point(50, 110);
-                connector_2.PositionOnElement = Position.bottom;
-                //PositionResistanceIndicator = new Point(90, 50);
-            }
-            else
-            {
-                Angle = 0;
-                PositionConnector_1 = new Point(-10, 50);
-                connector_1.PositionOnElement = Position.left;
-                PositionConnector_2 = new Point(110, 50);
-                connector_2.PositionOnElement = Position.right;
-                //PositionResistanceIndicator = new Point(50, 20);
+                case 0:
+                    {
+                        PositionConnector_1 = new Point(-10, 50);
+                        connector_1.PositionOnElement = Position.left;
+                        PositionConnector_2 = new Point(110, 50);
+                        connector_2.PositionOnElement = Position.right;
+
+                        AngleIndicator = 0;
+                        PositionIndicator = new Point(40, 90);
+                        PositionTbName = new Point(45, -5);
+                        break;
+                    }
+                case 90:
+                    {
+                        PositionConnector_1 = new Point(50, -10);
+                        connector_1.PositionOnElement = Position.top;
+                        PositionConnector_2 = new Point(50, 110);
+                        connector_2.PositionOnElement = Position.bottom;
+
+                        AngleIndicator = -90;
+                        PositionIndicator = new Point(-5, 80);
+                        PositionTbName = new Point(105, 20);
+                        break;
+                    }
+                case 180:
+                    {
+                        PositionConnector_1 = new Point(110, 50);
+                        connector_1.PositionOnElement = Position.right;
+                        PositionConnector_2 = new Point(-10, 50);
+                        connector_2.PositionOnElement = Position.left;
+
+                        AngleIndicator = 0;
+                        PositionIndicator = new Point(40, 90);
+                        PositionTbName = new Point(45, -5);
+                        break;
+                    }
+                case 270:
+                    {
+                        PositionConnector_1 = new Point(50, 110);
+                        connector_1.PositionOnElement = Position.bottom;
+                        PositionConnector_2 = new Point(50, -10);
+                        connector_2.PositionOnElement = Position.top;
+
+                        AngleIndicator = -90;
+                        PositionIndicator = new Point(-5, 80);
+                        PositionTbName = new Point(105, 20);
+                        break;
+                    }
             }
             Bindings.Update();
             ChildrenPositionUpdate();

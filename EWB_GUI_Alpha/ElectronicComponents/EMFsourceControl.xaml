@@ -43,10 +43,24 @@
                                 Canvas.Left="{x:Bind PositionConnector_2.X}"
                                 Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
 
+        <TextBlock Text="{x:Bind IndicatorValue}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionIndicator.X}"
+                   Canvas.Top="{x:Bind PositionIndicator.Y}">
+            <TextBlock.RenderTransform>
+                <RotateTransform Angle="{x:Bind AngleIndicator}" x:DefaultBindMode="OneWay" CenterX="0" CenterY="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        
+        <TextBlock Text="{x:Bind ComponentName}"
+                   FontSize="24"
+                   Canvas.Left="{x:Bind PositionTbName.X}"
+                   Canvas.Top="{x:Bind PositionTbName.Y}"/>
+
         <Canvas.ContextFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem Text="Повернуть по часовой стрелке" Click="RotateComponent"/>
-                <MenuFlyoutItem Text="Повернуть против часовой стрелки" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Повернуть на 90&#x00B0;&#x21BB;" Click="Rotate90Clockwice"/>
+                <MenuFlyoutItem Text="Повернуть на 90&#x00B0;&#x21BA;" Click="Rotate90Counterclockwice"/>
                 <MenuFlyoutItem Text="Копировать"/>
                 <MenuFlyoutItem Text="Свойства"/>
                 <MenuFlyoutSeparator/>

@@ -18,8 +18,6 @@ namespace EWB_GUI_Alpha.ElectronicComponents
     {
         Point CenterComponent { get; }
         Point OldPositionComponentOnCanvas { get; set; }
-
-        void RotateComponent(object sender, RoutedEventArgs e);
         void ChildrenPositionUpdate();
     }
 

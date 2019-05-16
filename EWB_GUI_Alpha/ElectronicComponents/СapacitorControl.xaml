@@ -40,7 +40,7 @@
                                 Canvas.Left="{x:Bind PositionConnector_2.X}"
                                 Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
 
-        <TextBlock Text="{x:Bind ResistanceValue}"
+        <TextBlock Text="{x:Bind CapacitorValue}"
                    FontSize="24"
                    Canvas.Left="{x:Bind PositionResistanceIndicator.X}"
                    Canvas.Top="{x:Bind PositionResistanceIndicator.Y}">

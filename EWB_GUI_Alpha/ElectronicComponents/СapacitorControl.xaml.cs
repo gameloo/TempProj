@@ -24,7 +24,7 @@ namespace EWB_GUI_Alpha.ElectronicComponents
         private Point PositionTbName { get; set; } = new Point(45, 0);
         private Point PositionResistanceIndicator { get; set; } = new Point(40, 90);
         public double Angle { get; set; }
-        public string ResistanceValue { get; set; } = "100";
+        public string CapacitorValue { get; set; } = "100";
         public string ComponentName { get; set; } = "C";
 
         public CapacitorControl()
