@@ -38,6 +38,10 @@
                           SelectedItem="{x:Bind FrequencyMultipler[0]}"
                           HorizontalAlignment="Right" RelativePanel.RightOf="tbFrequency" RelativePanel.Below="tbH3" RelativePanel.AlignRightWithPanel="True"/>
             </RelativePanel>
+            <RelativePanel Margin="5" Visibility="{Binding ElementName=cbACDC, Path=SelectedIndex}">
+                <TextBlock Name="tbH4" Text="Угол фазового сдвига" Margin="5,0,5,0"/>
+                <TextBox Name="tbDegr" Width="240" RelativePanel.Below="tbH4" RelativePanel.AlignLeftWithPanel="True"/>
+            </RelativePanel>
             <TextBlock Text="Обозначение на схеме" Margin="5,10,5,0"/>
             <TextBox Name="tbNameCompont"  Margin="5,5,5,0"/>
 

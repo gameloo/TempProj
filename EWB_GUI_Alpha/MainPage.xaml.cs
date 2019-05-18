@@ -1,5 +1,6 @@
 ﻿using EWB_GUI_Alpha.ElectronicComponents;
 using EWB_GUI_Alpha.ElectronicComponents.Active;
+using EWB_GUI_Alpha.ElectronicComponents.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -113,6 +114,15 @@ namespace EWB_GUI_Alpha
             var file = await openPicker.PickSingleFileAsync();
         }
 
+        private void AddNewConnector(object sender, RoutedEventArgs e)
+        {
+            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center, ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY };
+            cWorkSpace.Children.Add(tempConnector);
+            tempConnector.AddMenuFlyout();
+            Canvas.SetLeft(tempConnector, CursorPosition.X);
+            Canvas.SetTop(tempConnector, CursorPosition.Y);
+        }
+
         private void AddVoltageCurrentSource(object sender, RoutedEventArgs e)
         {
             var control = new UCVoltageCurrentSource();
@@ -129,18 +139,13 @@ namespace EWB_GUI_Alpha
 
         private void AddVoltmeter(object sender, RoutedEventArgs e)
         {
-
+            var control = new UCVoltmeter();
+            cWorkSpace.Children.Add(control);
+            Canvas.SetLeft(control, CursorPosition.X);
+            Canvas.SetTop(control, CursorPosition.Y);
+            repeatElementType = typeof(UCVoltmeter);
         }
 
-        private void AddNewConnector(object sender, RoutedEventArgs e)
-        {
-            var tempConnector = new ConnectorControl() { PositionOnElement = Position.center, ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY };
-            cWorkSpace.Children.Add(tempConnector);
-            tempConnector.AddMenuFlyout();
-            Canvas.SetLeft(tempConnector, CursorPosition.X);
-            Canvas.SetTop(tempConnector, CursorPosition.Y);
-
-        }
 
         private void AddResistor(object sender, RoutedEventArgs e)
         {

@@ -25,8 +25,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents.Active
         private Point PinPosRight = new Point(110, 50);
         private Point PinPosTop = new Point(50, -10);
         private Point PinPosBot = new Point(50, 110);
-        private Point IndicatorPosVert = new Point(-5, 80);
-        private Point IndicatorPosHor = new Point(40, 90);
+        private Point IndicatorPosVert = new Point(-5, 120);
+        private Point IndicatorPosHor = new Point(0, 90);
         private Point ComponentNamePosVert = new Point(105, 20);
         private Point ComponentNamePosHor = new Point(45, -5);
         public double Angle { get; set; }

@@ -1,0 +1,18 @@
+﻿<ContentDialog
+    x:Class="EWB_GUI_Alpha.PropertiesOfComponents.Tools.CDVoltageProp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EWB_GUI_Alpha.PropertiesOfComponents.Tools"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Cheat voltage amerage"
+    PrimaryButtonText="ok"
+    SecondaryButtonText="cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <TextBox Text="{x:Bind TEXT}" Width="300" x:DefaultBindMode="TwoWay"/>
+    </Grid>
+</ContentDialog>

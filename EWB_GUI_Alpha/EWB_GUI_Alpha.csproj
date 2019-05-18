@@ -111,13 +111,13 @@
     <Compile Include="ElectronicComponents\Passive\InductorControl.xaml.cs">
       <DependentUpon>InductorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml.cs">
+    <Compile Include="PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml.cs">
       <DependentUpon>CurrentSourceProperties.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml.cs">
+    <Compile Include="PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml.cs">
       <DependentUpon>CDVoltageCurrentSourceProperties.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ElectronicComponents\PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml.cs">
+    <Compile Include="PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml.cs">
       <DependentUpon>PropertiesOfResistorContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ElectronicComponents\Passive\ResistorControl.xaml.cs">
@@ -141,6 +141,9 @@
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesOfComponents\Tools\CDVoltageProp.xaml.cs">
+      <DependentUpon>CDVoltageProp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,15 +188,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml">
+    <Page Include="PropertiesOfComponents\Active\CurrentSource\CurrentSourceProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml">
+    <Page Include="PropertiesOfComponents\Active\VoltageCurrentSource\CDVoltageCurrentSourceProperties.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ElectronicComponents\PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml">
+    <Page Include="PropertiesOfComponents\Passive\Resistor\PropertiesOfResistorContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -225,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PropertiesOfComponents\Tools\CDVoltageProp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -235,8 +242,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Capacitor\" />
-    <Folder Include="ElectronicComponents\PropertiesOfComponents\Passive\Inductor\" />
+    <Folder Include="PropertiesOfComponents\Passive\Capacitor\" />
+    <Folder Include="PropertiesOfComponents\Passive\Inductor\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

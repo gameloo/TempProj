@@ -45,6 +45,8 @@
                                 Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
 
         <TextBlock Text="{x:Bind IndicatorValue}"
+                   TextAlignment="Center"
+                   Width="120"
                    FontSize="24"
                    Canvas.Left="{x:Bind PositionIndicator.X}"
                    Canvas.Top="{x:Bind PositionIndicator.Y}">

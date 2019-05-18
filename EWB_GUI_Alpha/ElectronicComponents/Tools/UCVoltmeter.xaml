@@ -5,11 +5,50 @@
     xmlns:local="using:EWB_GUI_Alpha.ElectronicComponents.Tools"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local1="using:EWB_GUI_Alpha.ElectronicComponents"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="100"
+    d:DesignWidth="160"
+    AllowDrop="True"
+    ManipulationStarted="UserControl_ManipulationStarted"
+    ManipulationDelta="UserControl_ManipulationDelta"
+    ManipulationCompleted="UserControl_ManipulationCompleted"
+    ManipulationMode="TranslateX, TranslateY"
+    Canvas.ZIndex="3">
 
-    <Grid>
+    <Canvas Background="White" Width="160" Height="100">
+        <Path Stroke="Black" StrokeThickness="3">
+            <Path.Data>
+                <GeometryGroup FillRule="EvenOdd">
+                    <LineGeometry StartPoint="{x:Bind Pin1LineHoriz[0]}" EndPoint="{x:Bind Pin1LineHoriz[1]}"/>
+                    <LineGeometry StartPoint="{x:Bind Pin2LineHoriz[0]}" EndPoint="{x:Bind Pin2LineHoriz[1]}"/>
+                    <RectangleGeometry Rect="15,25,130,50"/>
+                    <RectangleGeometry Rect="20,30,120,40"/>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
 
-    </Grid>
+        <TextBlock Text="{x:Bind IndicateValue}" Width="100" FontSize="24" Canvas.Left="30" Canvas.Top="32" TextAlignment="Center"/>
+
+        <local1:ConnectorControl x:Name="connector_1"
+                                ManipulationMode="None"
+                                PositionOnElement="left"
+                                Canvas.Left="{x:Bind PositionConnector_1.X}"
+                                Canvas.Top="{x:Bind PositionConnector_1.Y}"/>
+        <local1:ConnectorControl x:Name="connector_2"
+                                ManipulationMode="None"
+                                PositionOnElement="right"
+                                Canvas.Left="{x:Bind PositionConnector_2.X}"
+                                Canvas.Top="{x:Bind PositionConnector_2.Y}"/>
+
+
+        <Canvas.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>
+            </MenuFlyout>
+        </Canvas.ContextFlyout>
+    </Canvas>
 </UserControl>
