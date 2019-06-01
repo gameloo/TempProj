@@ -23,9 +23,11 @@
                     <LineGeometry StartPoint="95,60" EndPoint="120,60"/>
                     <EllipseGeometry Center="60,60" RadiusX="35" RadiusY="35"/>
 
-                    <LineGeometry StartPoint="40,60" EndPoint="80,60"/>
-                    <LineGeometry StartPoint="70,50" EndPoint="80,60"/>
-                    <LineGeometry StartPoint="70,70" EndPoint="80,60"/>
+                    <LineGeometry StartPoint="60,40" EndPoint="80,60"/>
+                    <LineGeometry StartPoint="60,80" EndPoint="80,60"/>
+                    
+                    <LineGeometry StartPoint="50,40" EndPoint="70,60"/>
+                    <LineGeometry StartPoint="50,80" EndPoint="70,60"/>
                 </GeometryGroup>
             </Path.Data>
             <Path.RenderTransform>
