@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local1="using:EWB_GUI_Alpha.ElectronicComponents"
     mc:Ignorable="d"
-    d:DesignHeight="100"
+    d:DesignHeight="120"
     d:DesignWidth="160"
     AllowDrop="True"
     ManipulationStarted="UserControl_ManipulationStarted"
@@ -16,19 +16,19 @@
     ManipulationMode="TranslateX, TranslateY"
     Canvas.ZIndex="3">
 
-    <Canvas Background="White" Width="160" Height="100">
+    <Canvas Background="White" Width="160" Height="120">
         <Path Stroke="Black" StrokeThickness="3">
             <Path.Data>
                 <GeometryGroup FillRule="EvenOdd">
                     <LineGeometry StartPoint="{x:Bind Pin1LineHoriz[0]}" EndPoint="{x:Bind Pin1LineHoriz[1]}"/>
                     <LineGeometry StartPoint="{x:Bind Pin2LineHoriz[0]}" EndPoint="{x:Bind Pin2LineHoriz[1]}"/>
-                    <RectangleGeometry Rect="15,25,130,50"/>
-                    <RectangleGeometry Rect="20,30,120,40"/>
+                    <RectangleGeometry Rect="15,35,130,50"/>
+                    <RectangleGeometry Rect="20,40,120,40"/>
                 </GeometryGroup>
             </Path.Data>
         </Path>
 
-        <TextBlock Text="{x:Bind IndicateValue}" Width="100" FontSize="24" Canvas.Left="30" Canvas.Top="32" TextAlignment="Center"/>
+        <TextBlock Text="{x:Bind IndicateValue}" Width="100" FontSize="24" Canvas.Left="30" Canvas.Top="42" TextAlignment="Center"/>
 
         <local1:ConnectorControl x:Name="connector_1"
                                 ManipulationMode="None"
@@ -45,6 +45,7 @@
         <Canvas.ContextFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem Text="Повернуть" Click="RotateComponent"/>
+                <MenuFlyoutItem Text="ShowError" Click="MenuFlyoutItem_Click"/>
                 <MenuFlyoutItem Text="Свойства" Click="OpenProperties"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Удалить" Click="DeleteElement"/>

@@ -21,15 +21,15 @@ namespace EWB_GUI_Alpha.ElectronicComponents.Tools
 {
     public sealed partial class UCVoltmeter : UserControl, IEComponent
     {
-        private Point PinPosLeft = new Point(-10, 40);
-        private Point PinPosRight = new Point(150, 40);
-        private Point PinPosTop = new Point(70, -10);
+        private Point PinPosLeft = new Point(-10, 50);
+        private Point PinPosRight = new Point(150, 50);
+        private Point PinPosTop = new Point(70, 5);
         private Point PinPosBot = new Point(70, 90);
-        private Point[] Pin1LineHoriz = new Point[] { new Point(0, 50), new Point(15, 50) };
-        private Point[] Pin2LineHoriz = new Point[] { new Point(145, 50), new Point(160, 50) };
+        private Point[] Pin1LineHoriz = new Point[] { new Point(0, 60), new Point(15, 60) };
+        private Point[] Pin2LineHoriz = new Point[] { new Point(145, 60), new Point(160, 60) };
 
-        private Point PositionConnector_1 { get; set; } = new Point(-10, 40);
-        private Point PositionConnector_2 { get; set; } = new Point(150, 40);
+        private Point PositionConnector_1 { get; set; } = new Point(-10, 50);
+        private Point PositionConnector_2 { get; set; } = new Point(150, 50);
 
         public string IndicateValue { get; set; } = "00В";
 
@@ -85,8 +85,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents.Tools
                 PositionConnector_2 = PinPosBot;
                 connector_2.PositionOnElement = Position.bottom;
 
-                Pin1LineHoriz = new Point[] { new Point(80, 0), new Point(80, 25) };
-                Pin2LineHoriz = new Point[] { new Point(80, 75), new Point(80, 100) };
+                Pin1LineHoriz = new Point[] { new Point(80, 15), new Point(80, 35) };
+                Pin2LineHoriz = new Point[] { new Point(80, 85), new Point(80, 100) };
             }
             else
             {
@@ -96,8 +96,8 @@ namespace EWB_GUI_Alpha.ElectronicComponents.Tools
                 PositionConnector_2 = PinPosRight;
                 connector_2.PositionOnElement = Position.right;
 
-                Pin1LineHoriz = new Point[] { new Point(0, 50), new Point(15, 50) };
-                Pin2LineHoriz = new Point[] { new Point(145, 50), new Point(160, 50) };
+                Pin1LineHoriz = new Point[] { new Point(0, 60), new Point(15, 60) };
+                Pin2LineHoriz = new Point[] { new Point(145, 60), new Point(160, 60) };
             }
             Bindings.Update();
             ChildrenPositionUpdate();
@@ -107,6 +107,18 @@ namespace EWB_GUI_Alpha.ElectronicComponents.Tools
             var dialog = new CDVoltageProp(this);
             var result = await dialog.ShowAsync();
             Bindings.Update();
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog deleteFileDialog = new ContentDialog()
+            {
+                Title = "Ошибка. Расчет остановлен",
+                Content = "На схеме нет компонентов",
+                PrimaryButtonText = "ОК",
+            };
+
+            ContentDialogResult result = await deleteFileDialog.ShowAsync();
         }
     }
 }
